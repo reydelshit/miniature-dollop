@@ -10,6 +10,7 @@ import jwt, { JwtPayload, VerifyErrors } from 'jsonwebtoken';
 // import { dashboardRouter } from './api/dashboardRoute';
 
 import { connectToDatabase } from './connections/DatabaseConnection';
+import { ConnectionPool } from 'mssql';
 
 
 
@@ -30,11 +31,6 @@ const SECRET_KEY = 'REYDEL';
 app.use(express.json());
 app.use(cors());
 app.use(cookieParser());
-// app.use('/uploads', express.static(path.join(__dirname, '../uploads')));
-
-// console.log('Serving static files from:', path.join(__dirname, 'uploads'));
-
-
 
 
 app.listen(PORT, () => {
@@ -56,23 +52,23 @@ app.get('/test-connection', (req, res) => {
         });
 });
 
-app.get('/register', (req, res) => {
+
+app.get('/register', async (req: Request, res: Response): Promise<void> => {
     const query = 'SELECT * FROM MTR_REGISTRATION';
-
-    connectToDatabase().then(pool => {
-        return pool.request().query(query);
-    }).then(result => {
-        res.json(result.recordset);
-    }).catch(err => {
-        console.error('Error:', err);
-        res.status(500).json({ 
-            message: 'Database operation failed', 
-            error: err.message,
-            details: err.stack
-        });
-    });
-});
-
+  
+    try {
+      const pool = await connectToDatabase();
+      const result = await pool.request().query(query);
+      res.json(result.recordset);
+    } catch (err: any) {
+      console.error('Error:', err);
+      res.status(500).json({ 
+        message: 'Database operation failed', 
+        error: err.message,
+        details: err.stack
+      });
+    }
+  });
 
 // // LOGIN API 
 // app.post('/login', (req, res) => {
