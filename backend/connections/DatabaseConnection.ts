@@ -11,9 +11,7 @@ const sqlConfig: sql.config = {
     encrypt: true,
     trustServerCertificate: true, 
   },
-  pool: {
-    // connectionTimeout: 30000, 
-  }
+ 
 };
 
 async function connectToDatabase(): Promise<ConnectionPool> {
