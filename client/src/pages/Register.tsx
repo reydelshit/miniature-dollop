@@ -2,9 +2,6 @@ import MainContainer from '@/components/structure/MainContainer';
 import { Button } from '@/components/ui/button';
 import { Input } from '@/components/ui/input';
 import { Label } from '@/components/ui/label';
-import { Link } from 'react-router-dom';
-import React from 'react';
-import { SubmitHandler, useForm } from 'react-hook-form';
 import {
   Select,
   SelectContent,
@@ -12,6 +9,13 @@ import {
   SelectTrigger,
   SelectValue,
 } from '@/components/ui/select';
+import { useState } from 'react';
+import { SubmitHandler, useForm } from 'react-hook-form';
+import { Link } from 'react-router-dom';
+import useSWR from 'swr';
+import axios from 'axios';
+import { Toast } from '@/components/ui/toast';
+import { useToast } from '@/hooks/use-toast';
 
 type Inputs = {
   lastName: string;
@@ -25,14 +29,99 @@ type Inputs = {
   userPassword: string;
 };
 
+type SponsorsData = {
+  ControlNo: number;
+  SponsorID: string;
+  Code: string;
+  LastName: string;
+  FirstName: string;
+  MiddleInitial: string;
+  Address: string;
+  ContactNumber: string;
+  EmailAddress: string;
+  DateRegister: string;
+  Status: string;
+  isOnline: string;
+  ACCOUNTNO: string;
+};
+
 const Register = () => {
+  const [selectedSponsors, setSelectedSponsors] = useState<string>('');
+  const [isLoading, setIsLoading] = useState<boolean>(false);
   const {
     register,
     handleSubmit,
     watch,
     formState: { errors },
+    reset,
   } = useForm<Inputs>();
-  const onSubmit: SubmitHandler<Inputs> = (data) => console.log(data);
+  const { toast } = useToast();
+
+  const fetcher = async (url: string): Promise<SponsorsData[]> => {
+    const response = await fetch(url);
+    if (!response.ok) {
+      throw new Error('Network response was not ok');
+    }
+    return response.json();
+  };
+
+  const {
+    data: sponsors,
+    error,
+    mutate,
+  } = useSWR(`${import.meta.env.VITE_SERVER_LINK}/sponsors`, fetcher);
+
+  const onSubmit: SubmitHandler<Inputs> = async (data) => {
+    const formData = new FormData();
+
+    formData.append('lastName', data.lastName);
+    formData.append('firstName', data.firstName);
+    formData.append('middleInitial', data.middleInitial);
+    formData.append('address', data.address);
+    formData.append('contactNumber', data.contactNumber);
+    formData.append('emailAddress', data.emailAddress);
+    formData.append('status', 'NEW');
+    formData.append('isOnline', 'N');
+    // formData.append('userPassword', data.userPassword);
+    formData.append('SponsorID', selectedSponsors);
+
+    console.log({ ...data, sponsorID: selectedSponsors });
+
+    try {
+      const response = await axios.post(
+        `${import.meta.env.VITE_SERVER_LINK}/register`,
+        formData,
+      );
+
+      console.log(response.data);
+
+      if (response.data.status === 'success') {
+        toast({
+          title: 'Student Added Successfully',
+          description: 'The student has been added to the system.',
+        });
+
+        mutate();
+        reset();
+
+        setSelectedSponsors('');
+      }
+    } catch (error) {
+      console.error(error);
+
+      toast({
+        title: 'Error',
+        description: 'An error occurred while adding the student.',
+        variant: 'destructive',
+      });
+    } finally {
+      setIsLoading(false);
+    }
+  };
+
+  const handleChangeSponsors = (value: string) => {
+    setSelectedSponsors(value);
+  };
 
   return (
     <MainContainer>
@@ -47,14 +136,16 @@ const Register = () => {
           <div className="my-2 text-start">
             <Label>Sponsors</Label>
 
-            <Select>
+            <Select onValueChange={handleChangeSponsors}>
               <SelectTrigger>
                 <SelectValue placeholder="Sponsors" />
               </SelectTrigger>
               <SelectContent>
-                <SelectItem value="Reydel">Reydel</SelectItem>
-                <SelectItem value="Reydel">Reydel</SelectItem>
-                <SelectItem value="Reydel">Reydel</SelectItem>
+                {sponsors?.map((sponsor, index) => (
+                  <SelectItem key={index} value={sponsor.ACCOUNTNO}>
+                    {sponsor.LastName}, {sponsor.FirstName}
+                  </SelectItem>
+                ))}
               </SelectContent>
             </Select>
           </div>
@@ -109,7 +200,7 @@ const Register = () => {
             />
           </div>
 
-          <div className="my-2 flex w-full gap-2">
+          {/* <div className="my-2 flex w-full gap-2">
             <div className="w-full text-start">
               <Label>Password</Label>
               <Input
@@ -128,10 +219,10 @@ const Register = () => {
                 type="password"
               />
             </div>
-          </div>
+          </div> */}
 
           <Button className="mt-[2rem] w-[10rem]" type="submit">
-            Register
+            {isLoading ? 'Registering...' : 'Register'}
           </Button>
 
           <span className="my-4 block text-center text-sm font-semibold">
