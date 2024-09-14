@@ -9,13 +9,12 @@ import {
   SelectTrigger,
   SelectValue,
 } from '@/components/ui/select';
+import { useToast } from '@/hooks/use-toast';
+import axios from 'axios';
 import { useState } from 'react';
 import { SubmitHandler, useForm } from 'react-hook-form';
 import { Link } from 'react-router-dom';
 import useSWR from 'swr';
-import axios from 'axios';
-import { Toast } from '@/components/ui/toast';
-import { useToast } from '@/hooks/use-toast';
 
 type Inputs = {
   lastName: string;
@@ -27,6 +26,7 @@ type Inputs = {
   emailAddress: string;
   status: string;
   userPassword: string;
+  confirmPassword: string;
 };
 
 type SponsorsData = {
@@ -81,9 +81,9 @@ const Register = () => {
     formData.append('contactNumber', data.contactNumber);
     formData.append('emailAddress', data.emailAddress);
     formData.append('status', 'NEW');
-    formData.append('isOnline', 'N');
-    // formData.append('userPassword', data.userPassword);
+    formData.append('isCreatedOnline', 'Y');
     formData.append('SponsorID', selectedSponsors);
+    formData.append('userPassword', data.userPassword);
 
     console.log({ ...data, sponsorID: selectedSponsors });
 
@@ -93,7 +93,7 @@ const Register = () => {
         formData,
       );
 
-      console.log(response.data);
+      console.log(response.data, 'resp');
 
       if (response.data.status === 'success') {
         toast({
@@ -157,6 +157,11 @@ const Register = () => {
                 {...register('firstName', { required: true })}
                 type="text"
               />
+              {errors.firstName && (
+                <span>
+                  <span className="text-red-500">This field is required</span>
+                </span>
+              )}
             </div>
 
             <div className="w-full text-start">
@@ -165,6 +170,11 @@ const Register = () => {
                 {...register('lastName', { required: true })}
                 type="text"
               />
+              {errors.lastName && (
+                <span>
+                  <span className="text-red-500">This field is required</span>
+                </span>
+              )}
             </div>
             <div className="text-start">
               <Label>Middle Initial</Label>
@@ -182,6 +192,12 @@ const Register = () => {
               {...register('address', { required: true })}
               type="address"
             />
+
+            {errors.address && (
+              <span>
+                <span className="text-red-500">This field is required</span>
+              </span>
+            )}
           </div>
 
           <div className="text-start">
@@ -190,6 +206,12 @@ const Register = () => {
               {...register('contactNumber', { required: true })}
               type="text"
             />
+
+            {errors.contactNumber && (
+              <span>
+                <span className="text-red-500">This field is required</span>
+              </span>
+            )}
           </div>
 
           <div className="text-start">
@@ -198,9 +220,14 @@ const Register = () => {
               {...register('emailAddress', { required: true })}
               type="email"
             />
+            {errors.emailAddress && (
+              <span>
+                <span className="text-red-500">This field is required</span>
+              </span>
+            )}
           </div>
 
-          {/* <div className="my-2 flex w-full gap-2">
+          <div className="my-2 flex w-full gap-2">
             <div className="w-full text-start">
               <Label>Password</Label>
               <Input
@@ -212,14 +239,17 @@ const Register = () => {
             <div className="w-full text-start">
               <Label>Confirm Password</Label>
               <Input
-                {...register('userPassword', {
+                {...register('confirmPassword', {
                   required: true,
                   validate: (value) => value === watch('userPassword'),
                 })}
                 type="password"
               />
+              {errors.confirmPassword && (
+                <span className="text-red-500">Passwords do not match</span>
+              )}
             </div>
-          </div> */}
+          </div>
 
           <Button className="mt-[2rem] w-[10rem]" type="submit">
             {isLoading ? 'Registering...' : 'Register'}
