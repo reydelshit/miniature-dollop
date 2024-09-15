@@ -1,8 +1,8 @@
 import Header from '@/components/structure/Header';
 import { Toaster } from '@/components/ui/toaster';
-import Dashboard from '@/pages/Dashboard';
 import { useEffect } from 'react';
 import { Outlet, useLocation } from 'react-router-dom';
+import HeroPage from './HeroPage';
 
 const Root = () => {
   const params = useLocation();
@@ -16,10 +16,10 @@ const Root = () => {
   return (
     <div className="flex h-full w-full items-center justify-center">
       <div className="w-full">
-        <Header />
+        {/* <Header /> */}
         <div className="h-full w-full">
           {/* This is where the child routes get rendered */}
-          {params.pathname === '/' ? <Dashboard /> : <Outlet />}
+          {params.pathname === '/' ? <HeroPage /> : <Outlet />}
         </div>
       </div>
 

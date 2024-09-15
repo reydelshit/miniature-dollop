@@ -1,41 +1,84 @@
 import { ShoppingCart } from 'lucide-react';
 import { Button } from '../ui/button';
-import { Link } from 'react-router-dom';
+import { Link, useNavigate } from 'react-router-dom';
+import {
+  Dialog,
+  DialogContent,
+  DialogDescription,
+  DialogHeader,
+  DialogTitle,
+  DialogTrigger,
+} from '@/components/ui/dialog';
+import Login from '@/pages/Login';
+import { useSwitchPanel } from '@/store/store';
+import Register from '@/pages/Register';
+
 const Header = () => {
+  const navigate = useNavigate();
+  const status = useSwitchPanel((state) => state.status);
   return (
-    <div className="flex w-full items-center justify-center p-4">
-      <div className="mx-auto flex w-full max-w-[1255px] items-center justify-between p-4">
+    <div className="flex h-[8rem] w-full items-center justify-center p-4">
+      <div className="mx-auto flex w-[90%] max-w-[1200px] items-center justify-between">
         <div className="flex items-center gap-10">
           {/* <img className="w-20" src={Logo} alt="logo" /> */}
-          <h1>LiveWell Marketing Corporation</h1>
+          <h1
+            className="cursor-pointer text-center text-2xl text-white"
+            onClick={() => navigate('/')}
+          >
+            LiveWell
+          </h1>
         </div>
-        <div className="flex gap-4">
+
+        {/* <div className="ml-[-1.5rem] flex gap-8">
           <a
-            className="font-semibold uppercase text-[#847E7C] hover:text-black"
+            className="w-[8rem] rounded-2xl bg-white p-2 text-center text-sm uppercase text-black hover:text-black"
             href="#about"
           >
             About
           </a>
 
           <a
-            className="font-semibold uppercase text-[#847E7C] hover:text-black"
+            className="w-[8rem] rounded-2xl bg-white p-2 text-center text-sm uppercase text-black hover:text-black"
             href="#services"
           >
             Services
           </a>
 
           <a
-            className="font-semibold uppercase text-[#847E7C] hover:text-black"
+            className="w-[8rem] rounded-2xl bg-white p-2 text-center text-sm uppercase text-black hover:text-black"
             href="#contact"
           >
             Contact
           </a>
-        </div>
+        </div> */}
+
         <div className="flex items-center gap-4">
-          <ShoppingCart />
-          <Link to="/login">
-            <Button>Login</Button>
-          </Link>
+          <ShoppingCart className="text-white" />
+          <Dialog>
+            <DialogTrigger>
+              <Button
+                className="w-[8rem] rounded-full border-2 border-white bg-transparent text-white"
+                onClick={() => useSwitchPanel.getState().setStatus('login')}
+              >
+                Login
+              </Button>
+            </DialogTrigger>
+            <DialogContent className="h-[650px] w-[700px]">
+              <DialogHeader className="grid h-[80px] w-full place-content-center place-items-center text-center">
+                <DialogTitle className="text-2xl font-semibold">
+                  {' '}
+                  {status === 'login' ? 'Login' : 'Register'}
+                </DialogTitle>
+                <DialogDescription>
+                  {' '}
+                  {status === 'login'
+                    ? 'Enter your credentials to login'
+                    : 'Enter the required information to register'}
+                </DialogDescription>
+              </DialogHeader>
+              {status === 'login' ? <Login /> : <Register />}
+            </DialogContent>
+          </Dialog>
         </div>
       </div>
     </div>
