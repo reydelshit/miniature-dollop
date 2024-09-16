@@ -1,7 +1,7 @@
 [build]
+  base = "backend"
+  publish = "dist"
   command = "npm run build"
-  publish = "build"
-  functions = "netlify/functions"
 
 [[redirects]]
   from = "/api/*"
