@@ -1,6 +1,3 @@
-import { ShoppingCart } from 'lucide-react';
-import { Button } from '../ui/button';
-import { Link, useNavigate } from 'react-router-dom';
 import {
   Dialog,
   DialogContent,
@@ -10,8 +7,11 @@ import {
   DialogTrigger,
 } from '@/components/ui/dialog';
 import Login from '@/pages/Login';
-import { useSwitchPanel } from '@/store/store';
 import Register from '@/pages/Register';
+import { useSwitchPanel } from '@/store/store';
+import { ShoppingCart } from 'lucide-react';
+import { useNavigate } from 'react-router-dom';
+import { Button } from '../ui/button';
 
 const Header = () => {
   const navigate = useNavigate();

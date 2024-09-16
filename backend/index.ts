@@ -4,10 +4,7 @@ import dotenv from 'dotenv';
 import express, { Express, Request, Response } from 'express';
 import { JwtPayload } from 'jsonwebtoken';
 import multer from 'multer';
-// import { studentRouter } from './api/studentRoute';
-// import { attendanceRouter } from './api/attendanceRoute';
-// import { messageRouter } from './api/messagesRoute';
-// import { dashboardRouter } from './api/dashboardRoute';
+
 
 import { executeQuery } from './connections/QueryConnection';
 
@@ -26,7 +23,7 @@ dotenv.config();
 const app: Express = express();
 const PORT = process.env.PORT || 8800;
 const upload = multer();
-const SECRET_KEY = 'REYDEL'; 
+export const handler = app; 
 
 app.use(express.json());
 app.use(cors());
@@ -212,9 +209,6 @@ app.post('/register', upload.none(), async (req: express.Request, res: express.R
   }
 });
 
-app.listen(PORT, () => {
-  console.log(`Server is running on PORT ${PORT}`);
-});
 
 
 

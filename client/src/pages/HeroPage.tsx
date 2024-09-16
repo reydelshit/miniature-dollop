@@ -1,6 +1,5 @@
 import LiveWellProd from '@/assets/livewellprod.png';
 import Header from '@/components/structure/Header';
-import MainContainer from '@/components/structure/MainContainer';
 import { Button } from '@/components/ui/button';
 import { ArrowDown } from 'lucide-react';
 const HeroPage = () => {
@@ -31,7 +30,7 @@ const HeroPage = () => {
               <img
                 src={LiveWellProd}
                 alt="Product"
-                className="h-[450px] w-[400px] object-fill"
+                className="h-[460px] w-[400px] object-fill"
               />
             </div>
 

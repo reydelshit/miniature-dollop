@@ -1,4 +1,3 @@
-import Header from '@/components/structure/Header';
 import { Toaster } from '@/components/ui/toaster';
 import { useEffect } from 'react';
 import { Outlet, useLocation } from 'react-router-dom';

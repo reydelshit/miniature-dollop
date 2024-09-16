@@ -1,4 +1,3 @@
-import MainContainer from '@/components/structure/MainContainer';
 import { Button } from '@/components/ui/button';
 import { Input } from '@/components/ui/input';
 import { Label } from '@/components/ui/label';
@@ -14,7 +13,6 @@ import { useSwitchPanel } from '@/store/store';
 import axios from 'axios';
 import { useState } from 'react';
 import { SubmitHandler, useForm } from 'react-hook-form';
-import { Link } from 'react-router-dom';
 import useSWR from 'swr';
 
 type Inputs = {
@@ -136,18 +134,22 @@ const Register = () => {
         <p className="my-2">Enter your details to create an account</p> */}
 
         <div className="my-2 text-start">
-          <Label>Sponsors</Label>
+          <Label>Sponsors </Label>
 
           <Select onValueChange={handleChangeSponsors}>
             <SelectTrigger>
               <SelectValue placeholder="Sponsors" />
             </SelectTrigger>
             <SelectContent>
-              {sponsors?.map((sponsor, index) => (
-                <SelectItem key={index} value={sponsor.ACCOUNTNO}>
-                  {sponsor.LastName}, {sponsor.FirstName}
-                </SelectItem>
-              ))}
+              {error ? (
+                sponsors?.map((sponsor, index) => (
+                  <SelectItem key={index} value={sponsor.ACCOUNTNO}>
+                    {sponsor.LastName}, {sponsor.FirstName}
+                  </SelectItem>
+                ))
+              ) : (
+                <SelectItem value="1">ERROR...</SelectItem>
+              )}
             </SelectContent>
           </Select>
         </div>
