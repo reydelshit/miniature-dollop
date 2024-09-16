@@ -90,7 +90,7 @@ const Register = () => {
 
     try {
       const response = await axios.post(
-        `${import.meta.env.VITE_SERVER_LINK}/register`,
+        `${import.meta.env.VITE_SERVER_LINK}/register/post`,
         formData,
       );
 
