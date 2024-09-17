@@ -28,6 +28,10 @@ type Inputs = {
   status: string;
   userPassword: string;
   confirmPassword: string;
+  city: string;
+  barangay: string;
+  postal: string;
+  street: string;
 };
 
 type SponsorsData = {
@@ -76,37 +80,15 @@ const Register = () => {
     mutate,
   } = useSWR(`${import.meta.env.VITE_SERVER_LINK}/sponsors`, fetcher);
 
-  const fetchAllCountries = async () => {
-    try {
-      const response = await axios.get(
-        `https://api.countrystatecity.in/v1/countries/IN/states/MH/cities`,
-        {
-          headers: {
-            'X-CSCAPI-KEY':
-              'dG9rZW4tY2xpZW50LXNlcnZlci1hcGktaW5kZXgtaW5kZXgtaW5kZXg=',
-          },
-        },
-      );
-
-      console.log(response.data, 'resp');
-    } catch (error) {
-      console.error('error', error);
-    }
-  };
-
-  useEffect(() => {
-    fetchAllCountries();
-  }, []);
-
-  console.log(sponsors, 'sponsors');
-
   const onSubmit: SubmitHandler<Inputs> = async (data) => {
     const formData = new FormData();
+
+    const completeAddress = `${data.street}, ${data.barangay}, ${data.city}, ${region}, ${country}, ${data.postal}`;
 
     formData.append('lastName', data.lastName);
     formData.append('firstName', data.firstName);
     formData.append('middleInitial', data.middleInitial);
-    formData.append('address', data.address);
+    formData.append('address', completeAddress);
     formData.append('contactNumber', data.contactNumber);
     formData.append('emailAddress', data.emailAddress);
     formData.append('status', 'NEW');
@@ -115,6 +97,8 @@ const Register = () => {
     formData.append('userPassword', data.userPassword);
 
     console.log({ ...data, sponsorID: selectedSponsors });
+
+    console.log(formData, 'formdata');
 
     try {
       const response = await axios.post(
@@ -258,15 +242,59 @@ const Register = () => {
           </div>
         </div>
 
-        <div className="text-start">
-          <Label>City and Barangay</Label>
-          <Input {...register('address', { required: true })} type="address" />
+        <div className="flex w-full gap-2">
+          <div className="w-full text-start">
+            <Label>City</Label>
+            <Input {...register('city', { required: true })} type="city" />
 
-          {errors.address && (
-            <span>
-              <span className="text-red-500">This field is required</span>
-            </span>
-          )}
+            {errors.city && (
+              <span>
+                <span className="text-red-500">This field is required</span>
+              </span>
+            )}
+          </div>
+
+          <div className="w-full text-start">
+            <Label>Barangay</Label>
+            <Input
+              {...register('barangay', { required: true })}
+              type="barangay"
+            />
+
+            {errors.barangay && (
+              <span>
+                <span className="text-red-500">This field is required</span>
+              </span>
+            )}
+          </div>
+        </div>
+
+        <div className="flex gap-2">
+          <div className="w-full text-start">
+            <Label> Street, Block, Building, etc.</Label>
+            <Input {...register('street', { required: true })} type="street" />
+
+            {errors.street && (
+              <span>
+                <span className="text-red-500">This field is required</span>
+              </span>
+            )}
+          </div>
+
+          <div className="text-start">
+            <Label>Postal</Label>
+            <Input
+              className="w-[5rem]"
+              {...register('postal', { required: true })}
+              type="postal"
+            />
+
+            {errors.postal && (
+              <span>
+                <span className="text-red-500">This field is required</span>
+              </span>
+            )}
+          </div>
         </div>
 
         <div className="flex w-full gap-2">
@@ -322,11 +350,11 @@ const Register = () => {
           </div>
         </div>
 
-        <Button className="mt-[2rem] w-[10rem]" type="submit">
+        <Button className="mt-[0.5rem] w-[10rem]" type="submit">
           {isLoading ? 'Registering...' : 'Register'}
         </Button>
 
-        <span className="my-4 block text-center text-sm font-semibold">
+        <span className="my-2 block text-center text-sm font-semibold">
           Already have an account?{' '}
           <span className="cursor-pointer" onClick={toggle}>
             {status === 'login' ? 'Register' : 'Login'}

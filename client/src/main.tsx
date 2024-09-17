@@ -12,6 +12,7 @@ import DashboardAuth from './pages/authenticated/DashboardAuth';
 import Merchant from './pages/authenticated/Merchant';
 import Profile from './pages/authenticated/Profile';
 import Calendar from './pages/authenticated/Calendar';
+import ErrorPage from './pages/ErrorPage';
 
 axios.defaults.withCredentials = true;
 
@@ -19,6 +20,7 @@ const router = createBrowserRouter([
   {
     path: '/',
     element: <Root />,
+    errorElement: <ErrorPage />,
     children: [
       {
         path: 'login',

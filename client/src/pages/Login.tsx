@@ -35,7 +35,11 @@ const Login = () => {
     }
   };
   return (
-    <div className="mt-[-8rem] flex h-full w-full items-start justify-center">
+    <div className="mt-[-5rem] flex h-full w-full flex-col items-center justify-center">
+      <div className="w-full text-center">
+        <h1 className="text-2xl font-semibold">Login</h1>
+        <p>Enter your email and password to login</p>
+      </div>
       <form
         onSubmit={handleSubmitLogin}
         className="block w-[80%] p-8 text-center"

@@ -64,15 +64,15 @@ const Header = () => {
               </Button>
             </DialogTrigger>
             <DialogContent className="h-[650px] w-[700px]">
-              <DialogHeader className="grid h-[80px] w-full place-content-center place-items-center text-center">
+              <DialogHeader className="grid h-[50px] w-full place-content-center place-items-center text-center">
                 <DialogTitle className="text-2xl font-semibold">
                   {' '}
-                  {status === 'login' ? 'Login' : 'Register'}
+                  {status === 'login' ? '' : 'Register'}
                 </DialogTitle>
                 <DialogDescription>
                   {' '}
                   {status === 'login'
-                    ? 'Enter your credentials to login'
+                    ? ''
                     : 'Enter the required information to register'}
                 </DialogDescription>
               </DialogHeader>
