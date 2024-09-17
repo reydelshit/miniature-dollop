@@ -1,6 +1,6 @@
 import { NextFunction, Request, Response, Router } from 'express';
 import jwt, { JwtPayload, VerifyErrors } from 'jsonwebtoken';
-import sql from 'mssql/msnodesqlv8';
+import sql from 'mssql';
 import { connectionConfig } from '../connections/connectionConfig';
 
 const router = Router();
