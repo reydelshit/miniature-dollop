@@ -26,6 +26,7 @@ app.use(cookieParser());
 export async function connectToDatabase() {
   try {
     const pool = await sql.connect(connectionConfig);
+    console.log('Database connected successfully');
     return pool;
   } catch (err) {
     console.error('Database connection failed:', err);
