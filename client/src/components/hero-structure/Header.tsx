@@ -1,3 +1,4 @@
+import Logo from '@/assets/logo.png';
 import {
   Dialog,
   DialogContent,
@@ -10,12 +11,9 @@ import Login from '@/pages/Login';
 import Register from '@/pages/Register';
 import { useSwitchPanel } from '@/store/store';
 import { ShoppingCart } from 'lucide-react';
-import { useNavigate } from 'react-router-dom';
 import { Button } from '../ui/button';
-import Logo from '@/assets/logo.png';
 
 const Header = () => {
-  const navigate = useNavigate();
   const status = useSwitchPanel((state) => state.status);
   return (
     <div className="flex h-[8rem] w-full items-center justify-center p-4">
