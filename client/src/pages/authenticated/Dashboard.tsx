@@ -1,5 +1,3 @@
-import DashboardAuth from './DashboardAuth';
-import Logo from '@/assets/logo.png';
 const Dashboard = () => {
   return (
     <div className="w-full">

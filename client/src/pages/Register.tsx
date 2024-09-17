@@ -11,7 +11,7 @@ import {
 import { useToast } from '@/hooks/use-toast';
 import { useSwitchPanel } from '@/store/store';
 import axios from 'axios';
-import { useEffect, useState } from 'react';
+import { useState } from 'react';
 import { CountryDropdown, RegionDropdown } from 'react-country-region-selector';
 import 'react-country-state-city/dist/react-country-state-city.css';
 import { SubmitHandler, useForm } from 'react-hook-form';
