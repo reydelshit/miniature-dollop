@@ -1,6 +1,4 @@
 "use strict";
-Object.defineProperty(exports, "__esModule", { value: true });
-exports.connectionConfig = void 0;
 // export const connectionConfig = {
 //   server: 'REYDELSHIT',
 //   database: 'LIVEWELL',
@@ -10,6 +8,8 @@ exports.connectionConfig = void 0;
 //   },
 // driver: 'msnodesqlv8',
 // };
+Object.defineProperty(exports, "__esModule", { value: true });
+exports.connectionConfig = void 0;
 exports.connectionConfig = {
     server: 'mssql-183603-0.cloudclusters.net',
     port: 10077,

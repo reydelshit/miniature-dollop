@@ -1,5 +1,3 @@
-import sql from 'mssql/msnodesqlv8';
-
 // export const connectionConfig = {
 //   server: 'REYDELSHIT',
 //   database: 'LIVEWELL',
