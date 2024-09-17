@@ -30,9 +30,9 @@ const AuthWrapper = ({ children }: { children: React.ReactNode }) => {
     return <div>Loading...</div>;
   }
 
-  // if (isAuthenticated === false) {
-  //   return <Navigate to="/" replace />;
-  // }
+  if (isAuthenticated === false) {
+    return <Navigate to="/" replace />;
+  }
 
   return <>{children}</>;
 };
