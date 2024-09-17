@@ -12,7 +12,7 @@ router.get('/', async (req: Request, res: Response) => {
 
     const query = 'SELECT * FROM MTR_DEALER';
     const result = await request.query(query);
-    res.json(result);
+    res.json(result.recordset);
   } catch (err: any) {
     console.error('Dealer fetch failed:', err);
     res.status(500).json({

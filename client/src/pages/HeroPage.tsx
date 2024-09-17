@@ -1,5 +1,5 @@
 import LiveWellProd from '@/assets/livewellprod.png';
-import Header from '@/components/structure/Header';
+import Header from '@/components/hero-structure/Header';
 import { Button } from '@/components/ui/button';
 import { ArrowDown } from 'lucide-react';
 const HeroPage = () => {

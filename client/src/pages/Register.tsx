@@ -11,7 +11,9 @@ import {
 import { useToast } from '@/hooks/use-toast';
 import { useSwitchPanel } from '@/store/store';
 import axios from 'axios';
-import { useState } from 'react';
+import { useEffect, useState } from 'react';
+import { CountryDropdown, RegionDropdown } from 'react-country-region-selector';
+import 'react-country-state-city/dist/react-country-state-city.css';
 import { SubmitHandler, useForm } from 'react-hook-form';
 import useSWR from 'swr';
 
@@ -57,6 +59,8 @@ const Register = () => {
   const { toast } = useToast();
 
   const { status, toggle } = useSwitchPanel();
+  const [country, setCountry] = useState<string>('Philippines');
+  const [region, setRegion] = useState<string>('');
 
   const fetcher = async (url: string): Promise<SponsorsData[]> => {
     const response = await fetch(url);
@@ -71,6 +75,30 @@ const Register = () => {
     error,
     mutate,
   } = useSWR(`${import.meta.env.VITE_SERVER_LINK}/sponsors`, fetcher);
+
+  const fetchAllCountries = async () => {
+    try {
+      const response = await axios.get(
+        `https://api.countrystatecity.in/v1/countries/IN/states/MH/cities`,
+        {
+          headers: {
+            'X-CSCAPI-KEY':
+              'dG9rZW4tY2xpZW50LXNlcnZlci1hcGktaW5kZXgtaW5kZXgtaW5kZXg=',
+          },
+        },
+      );
+
+      console.log(response.data, 'resp');
+    } catch (error) {
+      console.error('error', error);
+    }
+  };
+
+  useEffect(() => {
+    fetchAllCountries();
+  }, []);
+
+  console.log(sponsors, 'sponsors');
 
   const onSubmit: SubmitHandler<Inputs> = async (data) => {
     const formData = new FormData();
@@ -141,15 +169,19 @@ const Register = () => {
               <SelectValue placeholder="Sponsors" />
             </SelectTrigger>
             <SelectContent>
-              {error ? (
-                sponsors?.map((sponsor, index) => (
-                  <SelectItem key={index} value={sponsor.ACCOUNTNO}>
-                    {sponsor.LastName}, {sponsor.FirstName}
-                  </SelectItem>
-                ))
-              ) : (
-                <SelectItem value="1">ERROR...</SelectItem>
-              )}
+              <SelectContent>
+                {error ? (
+                  <SelectItem value="1">ERROR...</SelectItem>
+                ) : sponsors && sponsors.length > 0 ? (
+                  sponsors.map((sponsor, index) => (
+                    <SelectItem key={index} value={sponsor.ACCOUNTNO}>
+                      {sponsor.LastName}, {sponsor.FirstName}
+                    </SelectItem>
+                  ))
+                ) : (
+                  <SelectItem value="1">Loading...</SelectItem> // Optional loading state
+                )}
+              </SelectContent>
             </SelectContent>
           </Select>
         </div>
@@ -184,8 +216,50 @@ const Register = () => {
           </div>
         </div>
 
+        <div className="my-2 flex items-center gap-2">
+          <div className="flex w-full flex-col space-y-2">
+            <Label className="text-start">Country</Label>
+            <CountryDropdown
+              value={country}
+              onChange={(val) => setCountry(val)}
+              // @ts-ignore
+              style={
+                {
+                  border: '1px solid #ccc',
+                  borderRadius: '5px',
+                  color: 'black',
+                  width: '100%',
+                  padding: '0.5rem',
+                  fontSize: '0.8rem',
+                } as React.CSSProperties
+              }
+            />
+          </div>
+
+          <div className="w-full text-start">
+            <Label className="text-start">Region</Label>
+
+            <RegionDropdown
+              country={country}
+              value={region}
+              onChange={(val) => setRegion(val)}
+              // @ts-ignore
+              style={
+                {
+                  border: '1px solid #ccc',
+                  borderRadius: '5px',
+                  color: 'black',
+                  width: '100%',
+                  padding: '0.5rem',
+                  fontSize: '0.8rem',
+                } as React.CSSProperties
+              }
+            />
+          </div>
+        </div>
+
         <div className="text-start">
-          <Label>Address</Label>
+          <Label>City and Barangay</Label>
           <Input {...register('address', { required: true })} type="address" />
 
           {errors.address && (
@@ -195,31 +269,33 @@ const Register = () => {
           )}
         </div>
 
-        <div className="text-start">
-          <Label>Phone Number</Label>
-          <Input
-            {...register('contactNumber', { required: true })}
-            type="text"
-          />
+        <div className="flex w-full gap-2">
+          {' '}
+          <div className="w-full text-start">
+            <Label>Phone Number</Label>
+            <Input
+              {...register('contactNumber', { required: true })}
+              type="text"
+            />
 
-          {errors.contactNumber && (
-            <span>
-              <span className="text-red-500">This field is required</span>
-            </span>
-          )}
-        </div>
-
-        <div className="text-start">
-          <Label>Email</Label>
-          <Input
-            {...register('emailAddress', { required: true })}
-            type="email"
-          />
-          {errors.emailAddress && (
-            <span>
-              <span className="text-red-500">This field is required</span>
-            </span>
-          )}
+            {errors.contactNumber && (
+              <span>
+                <span className="text-red-500">This field is required</span>
+              </span>
+            )}
+          </div>
+          <div className="w-full text-start">
+            <Label>Email</Label>
+            <Input
+              {...register('emailAddress', { required: true })}
+              type="email"
+            />
+            {errors.emailAddress && (
+              <span>
+                <span className="text-red-500">This field is required</span>
+              </span>
+            )}
+          </div>
         </div>
 
         <div className="my-2 flex w-full gap-2">
