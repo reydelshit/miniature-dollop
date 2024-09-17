@@ -12,6 +12,7 @@ import { useSwitchPanel } from '@/store/store';
 import { ShoppingCart } from 'lucide-react';
 import { useNavigate } from 'react-router-dom';
 import { Button } from '../ui/button';
+import Logo from '@/assets/logo.png';
 
 const Header = () => {
   const navigate = useNavigate();
@@ -20,13 +21,13 @@ const Header = () => {
     <div className="flex h-[8rem] w-full items-center justify-center p-4">
       <div className="mx-auto flex w-[90%] max-w-[1200px] items-center justify-between">
         <div className="flex items-center gap-10">
-          {/* <img className="w-20" src={Logo} alt="logo" /> */}
-          <h1
+          <img className="w-20" src={Logo} alt="logo" />
+          {/* <h1
             className="cursor-pointer text-center text-2xl text-white"
             onClick={() => navigate('/')}
           >
             LiveWell
-          </h1>
+          </h1> */}
         </div>
 
         {/* <div className="ml-[-1.5rem] flex gap-8">

@@ -9,7 +9,7 @@ import {
 } from '@/components/ui/dropdown-menu';
 import { ShoppingCart } from 'lucide-react';
 import axios from 'axios';
-
+import Logo from '@/assets/logo.png';
 const HeaderAuth = () => {
   const handleLogout = () => {
     axios
@@ -24,9 +24,9 @@ const HeaderAuth = () => {
   };
 
   return (
-    <div className="h-[5rem] w-full border-b-[1px]">
-      <div className="flex h-[6] items-center justify-between p-4">
-        <div className="text-2xl font-bold">Logo</div>
+    <div className="h-fit w-full border-b-[1px] shadow-sm">
+      <div className="flex h-[6] items-center justify-between px-10 py-4">
+        <img className="w-20" src={Logo} alt="logo" />
 
         <div className="flex items-center gap-4">
           <span className="rounded-lg bg-orange-500 p-2 font-semibold text-white">
