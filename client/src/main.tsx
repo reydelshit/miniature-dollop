@@ -1,27 +1,64 @@
+import axios from 'axios';
 import React from 'react';
 import ReactDOM from 'react-dom/client';
 import { createBrowserRouter, RouterProvider } from 'react-router-dom';
-import Root from './pages/Root';
+import AuthWrapper from './components/AuthWrapper';
 import './index.css';
-import Login from './pages/Login';
-import Register from './pages/Register';
+import Dashboard from './pages/authenticated/Dashboard';
+import HeroPage from './pages/HeroPage';
+import Root from './pages/Root';
+import Shop from './pages/authenticated/Shop';
+import DashboardAuth from './pages/authenticated/DashboardAuth';
+import Merchant from './pages/authenticated/Merchant';
+import Profile from './pages/authenticated/Profile';
+import Calendar from './pages/authenticated/Calendar';
+import ErrorPage from './pages/ErrorPage';
+
+axios.defaults.withCredentials = true;
 
 const router = createBrowserRouter([
   {
     path: '/',
     element: <Root />,
+    errorElement: <ErrorPage />,
     children: [
       {
-        path: 'attendance-log',
-        element: <div>Attendance</div>,
+        path: 'login',
+        element: <HeroPage />,
       },
       {
-        path: '/login',
-        element: <Login />,
+        path: 'register',
+        element: <HeroPage />,
       },
       {
-        path: '/register',
-        element: <Register />,
+        path: 'dashboard',
+        element: (
+          <AuthWrapper>
+            <DashboardAuth />
+          </AuthWrapper>
+        ),
+        children: [
+          {
+            index: true,
+            element: <Dashboard />,
+          },
+          {
+            path: 'shop',
+            element: <Shop />,
+          },
+          {
+            path: 'merchant-partners',
+            element: <Merchant />,
+          },
+          {
+            path: 'profile',
+            element: <Profile />,
+          },
+          {
+            path: 'calendars',
+            element: <Calendar />,
+          },
+        ],
       },
     ],
   },
