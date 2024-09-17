@@ -14,7 +14,7 @@ var __importDefault = (this && this.__importDefault) || function (mod) {
 Object.defineProperty(exports, "__esModule", { value: true });
 exports.registerRouter = void 0;
 const express_1 = require("express");
-const msnodesqlv8_1 = __importDefault(require("mssql/msnodesqlv8"));
+const mssql_1 = __importDefault(require("mssql"));
 const multer_1 = __importDefault(require("multer"));
 const connectionConfig_1 = require("../connections/connectionConfig");
 const router = (0, express_1.Router)();
@@ -24,8 +24,8 @@ router.get('/', (req, res) => __awaiter(void 0, void 0, void 0, function* () {
     console.log('fetching all registrations');
     let pool = null;
     try {
-        pool = yield msnodesqlv8_1.default.connect(connectionConfig_1.connectionConfig);
-        const request = new msnodesqlv8_1.default.Request(pool);
+        pool = yield mssql_1.default.connect(connectionConfig_1.connectionConfig);
+        const request = new mssql_1.default.Request(pool);
         const query = `
         SELECT * FROM MTR_REGISTRATION
         ORDER BY DateRegister DESC
@@ -51,7 +51,7 @@ router.post('/post', upload.none(), (req, res) => __awaiter(void 0, void 0, void
     let pool = null;
     try {
         // Connect to the database
-        pool = yield msnodesqlv8_1.default.connect(connectionConfig_1.connectionConfig);
+        pool = yield mssql_1.default.connect(connectionConfig_1.connectionConfig);
         // Get the latest Code
         const querySelect = 'SELECT ACCOUNTNO FROM MTR_SYSTEM_CONFIG';
         const resultSelect = yield pool.request().query(querySelect);
@@ -77,18 +77,18 @@ router.post('/post', upload.none(), (req, res) => __awaiter(void 0, void 0, void
       `;
         // Create a new request object and add parameters
         const request = pool.request();
-        request.input('Code', msnodesqlv8_1.default.VarChar, accountNumber);
-        request.input('SponsorID', msnodesqlv8_1.default.VarChar, SponsorID);
-        request.input('LastName', msnodesqlv8_1.default.VarChar, lastName);
-        request.input('FirstName', msnodesqlv8_1.default.VarChar, firstName);
-        request.input('MiddleInitial', msnodesqlv8_1.default.VarChar, middleInitial);
-        request.input('Address', msnodesqlv8_1.default.VarChar, address);
-        request.input('ContactNumber', msnodesqlv8_1.default.VarChar, contactNumber);
-        request.input('EmailAddress', msnodesqlv8_1.default.VarChar, emailAddress);
-        request.input('DateRegister', msnodesqlv8_1.default.DateTime, dateRegister);
-        request.input('Status', msnodesqlv8_1.default.VarChar, status);
-        request.input('isCreatedOnline', msnodesqlv8_1.default.Char(1), isCreatedOnline);
-        request.input('UserPassword', msnodesqlv8_1.default.VarChar, userPassword);
+        request.input('Code', mssql_1.default.VarChar, accountNumber);
+        request.input('SponsorID', mssql_1.default.VarChar, SponsorID);
+        request.input('LastName', mssql_1.default.VarChar, lastName);
+        request.input('FirstName', mssql_1.default.VarChar, firstName);
+        request.input('MiddleInitial', mssql_1.default.VarChar, middleInitial);
+        request.input('Address', mssql_1.default.VarChar, address);
+        request.input('ContactNumber', mssql_1.default.VarChar, contactNumber);
+        request.input('EmailAddress', mssql_1.default.VarChar, emailAddress);
+        request.input('DateRegister', mssql_1.default.DateTime, dateRegister);
+        request.input('Status', mssql_1.default.VarChar, status);
+        request.input('isCreatedOnline', mssql_1.default.Char(1), isCreatedOnline);
+        request.input('UserPassword', mssql_1.default.VarChar, userPassword);
         // Execute the query
         const resultInsert = yield request.query(queryInsert);
         // Send the response
@@ -100,7 +100,7 @@ router.post('/post', upload.none(), (req, res) => __awaiter(void 0, void 0, void
         });
         const queryUpdate = 'UPDATE MTR_SYSTEM_CONFIG SET ACCOUNTNO = @newCode';
         const requestUpdate = pool.request();
-        requestUpdate.input('newCode', msnodesqlv8_1.default.VarChar, accountNumber);
+        requestUpdate.input('newCode', mssql_1.default.VarChar, accountNumber);
         yield requestUpdate.query(queryUpdate);
     }
     catch (err) {

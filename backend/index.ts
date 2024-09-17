@@ -4,7 +4,7 @@ import dotenv from 'dotenv';
 import express, { Express } from 'express';
 import { connectionConfig } from './connections/connectionConfig';
 
-import sql from 'mssql/msnodesqlv8';
+import sql from 'mssql';
 import { loginRouter } from './api/loginRoute';
 import { registerRouter } from './api/registerRoutes';
 import { sponsorsRouter } from './api/sponsorsRoute';
