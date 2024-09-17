@@ -21,8 +21,6 @@ const __1 = require("..");
 //     trustServerCertificate: true,
 //   },
 // };
-// hays
-// hays
 function executeQuery(operation, query, params) {
     return __awaiter(this, void 0, void 0, function* () {
         const pool = yield (0, __1.connectToDatabase)();

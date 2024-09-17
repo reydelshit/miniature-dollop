@@ -14,9 +14,6 @@ type Operation = 'GET' | 'POST' | 'PUT' | 'DELETE';
 
 // };
 
-// hays
-// hays
-
 export async function executeQuery(
   operation: Operation,
   query: string,
