@@ -12,13 +12,13 @@ Object.defineProperty(exports, "__esModule", { value: true });
 exports.executeQuery = executeQuery;
 const __1 = require("..");
 // const sqlConfig: sql.config = {
-//   user: 'lvsysadd', 
-//   password: 'Livewellsysad@123', 
+//   user: 'lvsysadd',
+//   password: 'Livewellsysad@123',
 //   database: 'livewellmarketi_LIVEWELLDATA',
-//   server: '112.109.83.71', 
+//   server: '112.109.83.71',
 //   options: {
 //     encrypt: true,
-//     trustServerCertificate: true, 
+//     trustServerCertificate: true,
 //   },
 // };
 function executeQuery(operation, query, params) {

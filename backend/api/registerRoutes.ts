@@ -1,7 +1,6 @@
-import { Router } from 'express';
+import express, { Router } from 'express';
 import sql from 'mssql/msnodesqlv8';
 import multer from 'multer';
-import express, { Express, Request, Response } from 'express';
 import { connectionConfig } from '../connections/connectionConfig';
 const router = Router();
 const upload = multer();

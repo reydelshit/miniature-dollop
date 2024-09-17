@@ -1,8 +1,7 @@
 import cookieParser from 'cookie-parser';
 import cors from 'cors';
 import dotenv from 'dotenv';
-import express, { Express, Request } from 'express';
-import { JwtPayload } from 'jsonwebtoken';
+import express, { Express } from 'express';
 import { connectionConfig } from './connections/connectionConfig';
 
 import sql from 'mssql/msnodesqlv8';
