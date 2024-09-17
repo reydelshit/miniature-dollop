@@ -53,7 +53,8 @@ app.use('/login', loginRoute_1.loginRouter);
 app.post('/logout', (req, res) => {
     res.clearCookie('token', {
         httpOnly: true,
-        secure: process.env.NODE_ENV === 'production',
+        // secure: process.env.NODE_ENV === 'production',
+        secure: true,
         sameSite: 'strict',
     });
     res.json({ message: 'Logged out successfully' });

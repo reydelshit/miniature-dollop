@@ -44,7 +44,7 @@ router.post('/', (req, res) => __awaiter(void 0, void 0, void 0, function* () {
             res.cookie('token', token, {
                 httpOnly: true,
                 secure: process.env.NODE_ENV === 'production',
-                sameSite: 'strict',
+                sameSite: 'none',
             });
             return res.json({ message: 'Login successful', token: token });
         }
@@ -57,15 +57,22 @@ router.post('/', (req, res) => __awaiter(void 0, void 0, void 0, function* () {
 // VALIDATE TOKEN
 const authenticateToken = (req, res, next) => {
     const token = req.cookies.token;
-    if (!token)
-        return res.json({
+    if (!token) {
+        return res.status(401).json({
             isAuthenticated: false,
             message: 'Token not found',
             status: 401,
         });
+    }
     jsonwebtoken_1.default.verify(token, SECRET_KEY, (err, decoded) => {
-        if (err)
-            return res.sendStatus(403);
+        if (err) {
+            console.error('JWT Verification Error:', err);
+            return res.status(403).json({
+                isAuthenticated: false,
+                message: 'Invalid token',
+                status: 403,
+            });
+        }
         const user = decoded;
         req.user = user;
         next();

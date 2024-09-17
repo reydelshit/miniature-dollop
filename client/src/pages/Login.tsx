@@ -27,8 +27,13 @@ const Login = () => {
       );
       console.log(response.data);
 
-      if (response.data.token && response.data.message === 'Login successful') {
-        window.location.href = '/dashboard';
+      const { message, token } = response.data;
+
+      if (message === 'Login successful' && token) {
+        console.log('Login successful');
+
+        // Redirect to dashboard
+        // window.location.href = '/dashboard';
       }
     } catch (error) {
       console.error('Error during login:', error);
