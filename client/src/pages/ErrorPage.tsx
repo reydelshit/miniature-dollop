@@ -1,4 +1,5 @@
-import React, { useEffect, useState } from 'react';
+import axios from 'axios';
+import { useEffect, useState } from 'react';
 
 const ErrorPage = () => {
   const [countdown, setCountdown] = useState(5);
@@ -13,6 +14,15 @@ const ErrorPage = () => {
       clearInterval(countdown);
 
       window.location.href = '/';
+      axios
+        .post(`${import.meta.env.VITE_SERVER_LINK}/logout`, {
+          withCredentials: true,
+        })
+        .then((res) => {
+          window.location.href = '/';
+
+          console.log(res.data);
+        });
     }
   }, [countdown]);
 
