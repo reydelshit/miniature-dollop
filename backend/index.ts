@@ -13,7 +13,6 @@ import { sponsorsRouter } from './api/sponsorsRoute';
 dotenv.config();
 const app: Express = express();
 const PORT = process.env.PORT || 8800;
-export const handler = app;
 
 app.use(express.json());
 app.use(
@@ -55,3 +54,5 @@ app.post('/logout', (req, res) => {
 app.use((req, res) => {
   res.status(404).json({ message: '404 - Not Found' });
 });
+
+module.exports = app;
