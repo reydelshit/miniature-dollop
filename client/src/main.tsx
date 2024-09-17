@@ -1,10 +1,14 @@
+import axios from 'axios';
 import React from 'react';
 import ReactDOM from 'react-dom/client';
 import { createBrowserRouter, RouterProvider } from 'react-router-dom';
-import Root from './pages/Root';
+import AuthWrapper from './components/AuthWrapper';
 import './index.css';
-import Login from './pages/Login';
-import Register from './pages/Register';
+import Dashboard from './pages/Dashboard';
+import HeroPage from './pages/HeroPage';
+import Root from './pages/Root';
+
+axios.defaults.withCredentials = true;
 
 const router = createBrowserRouter([
   {
@@ -12,16 +16,20 @@ const router = createBrowserRouter([
     element: <Root />,
     children: [
       {
-        path: 'attendance-log',
-        element: <div>Attendance</div>,
+        path: '/dashboard',
+        element: (
+          <AuthWrapper>
+            <Dashboard />
+          </AuthWrapper>
+        ),
       },
       {
         path: '/login',
-        element: <Login />,
+        element: <HeroPage />,
       },
       {
         path: '/register',
-        element: <Register />,
+        element: <HeroPage />,
       },
     ],
   },

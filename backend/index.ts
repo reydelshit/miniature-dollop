@@ -10,22 +10,18 @@ import { loginRouter } from './api/loginRoute';
 import { registerRouter } from './api/registerRoutes';
 import { sponsorsRouter } from './api/sponsorsRoute';
 
-interface UserPayload extends JwtPayload {
-  userId?: number;
-  username: string;
-}
-
-interface AuthenticatedRequest extends Request {
-  user?: UserPayload;
-}
-
 dotenv.config();
 const app: Express = express();
 const PORT = process.env.PORT || 8800;
 export const handler = app;
 
 app.use(express.json());
-app.use(cors());
+app.use(
+  cors({
+    origin: 'http://localhost:5173',
+    credentials: true,
+  }),
+);
 app.use(cookieParser());
 
 export async function connectToDatabase() {
@@ -45,3 +41,17 @@ app.listen(PORT, () => {
 app.use('/sponsors', sponsorsRouter);
 app.use('/register', registerRouter);
 app.use('/login', loginRouter);
+
+app.post('/logout', (req, res) => {
+  res.clearCookie('token', {
+    httpOnly: true,
+    secure: process.env.NODE_ENV === 'production',
+    sameSite: 'strict',
+  });
+
+  res.json({ message: 'Logged out successfully' });
+});
+
+app.use((req, res) => {
+  res.status(404).json({ message: '404 - Not Found' });
+});

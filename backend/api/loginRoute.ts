@@ -15,14 +15,6 @@ interface AuthenticatedRequest extends Request {
   user?: UserPayload;
 }
 
-const users = [
-  {
-    userId: 1,
-    username: 'admin',
-    password: 'admin123',
-  },
-];
-
 // LOGIN API
 router.post('/', async (req, res) => {
   const { username, password } = req.body;
@@ -79,7 +71,12 @@ const authenticateToken = (
 ) => {
   const token = req.cookies.token;
 
-  if (!token) return res.sendStatus(401);
+  if (!token)
+    return res.json({
+      isAuthenticated: false,
+      message: 'Token not found',
+      status: 401,
+    });
 
   jwt.verify(
     token,
@@ -94,12 +91,8 @@ const authenticateToken = (
   );
 };
 
-router.get(
-  '/protected',
-  authenticateToken,
-  (req: AuthenticatedRequest, res) => {
-    res.json({ message: 'This is a protected route', user: req.user });
-  },
-);
+router.get('/check', authenticateToken, (req: AuthenticatedRequest, res) => {
+  res.json({ isAuthenticated: true, user: req.user });
+});
 
 export const loginRouter = router;
