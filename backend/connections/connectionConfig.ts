@@ -1,3 +1,5 @@
+import sql from 'mssql/msnodesqlv8';
+
 // export const connectionConfig = {
 //   server: 'REYDELSHIT',
 //   database: 'LIVEWELL',
@@ -5,7 +7,7 @@
 //     trustedConnection: true,
 //     trustServerCertificate: true,
 //   },
-//   driver: 'msnodesqlv8',
+// driver: 'msnodesqlv8',
 // };
 
 export const connectionConfig = {
