@@ -119,8 +119,8 @@ const Register = () => {
 
       if (response.data.status === 'success') {
         toast({
-          title: 'Student Added Successfully',
-          description: 'The student has been added to the system.',
+          title: 'Registration Successfully',
+          description: 'The registration has been successfully completed.',
         });
 
         mutate();

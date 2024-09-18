@@ -12,9 +12,13 @@ import Register from '@/pages/Register';
 import { useSwitchPanel } from '@/store/store';
 import { ShoppingCart } from 'lucide-react';
 import { Button } from '../ui/button';
+import { useLocation } from 'react-router-dom';
 
 const Header = () => {
   const status = useSwitchPanel((state) => state.status);
+
+  const path = useLocation().pathname;
+
   return (
     <div className="flex h-[8rem] w-full items-center justify-center p-4">
       <div className="mx-auto flex w-[90%] max-w-[1200px] items-center justify-between">
@@ -28,28 +32,34 @@ const Header = () => {
           </h1> */}
         </div>
 
-        {/* <div className="ml-[-1.5rem] flex gap-8">
+        <div className="ml-[5rem] flex gap-4">
           <a
-            className="w-[8rem] rounded-2xl bg-white p-2 text-center text-sm uppercase text-black hover:text-black"
+            className={`${path === '/#shop' ? 'bg-white' : 'bg-black bg-opacity-40'} w-[8rem] rounded-3xl pt-2.5 text-center text-sm font-semibold uppercase text-white hover:bg-white hover:text-black`}
+            href="#shop"
+          >
+            Shop
+          </a>
+          <a
+            className="h-[2.5rem] w-[8rem] rounded-3xl bg-black bg-opacity-40 pt-2.5 text-center text-sm font-semibold uppercase text-white hover:bg-white hover:text-black"
             href="#about"
           >
             About
           </a>
 
           <a
-            className="w-[8rem] rounded-2xl bg-white p-2 text-center text-sm uppercase text-black hover:text-black"
+            className="h-[2.5rem] w-[8rem] rounded-3xl bg-black bg-opacity-40 pt-2.5 text-center text-sm font-semibold uppercase text-white hover:bg-white hover:text-black"
             href="#services"
           >
             Services
           </a>
 
           <a
-            className="w-[8rem] rounded-2xl bg-white p-2 text-center text-sm uppercase text-black hover:text-black"
+            className="bbg-black w-[8rem] rounded-3xl bg-black bg-opacity-40 pt-2.5 text-center text-sm font-semibold uppercase text-white hover:bg-white hover:text-black"
             href="#contact"
           >
             Contact
           </a>
-        </div> */}
+        </div>
 
         <div className="flex items-center gap-4">
           <ShoppingCart className="text-white" />
