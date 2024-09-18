@@ -5,19 +5,18 @@ import { connectionConfig } from '../connections/connectionConfig';
 const router = Router();
 const upload = multer();
 
-// fetch all register
+// Fetch all registrations
 router.get('/', async (req: express.Request, res: express.Response) => {
-  console.log('fetching all registrations');
+  console.log('Fetching all registrations');
 
-  let pool: sql.ConnectionPool | null = null;
   try {
-    pool = await sql.connect(connectionConfig);
-    const request = new sql.Request(pool);
+    await sql.connect(connectionConfig);
 
+    const request = new sql.Request();
     const query = `
-        SELECT * FROM MTR_REGISTRATION
-        ORDER BY DateRegister DESC
-      `;
+      SELECT * FROM MTR_REGISTRATION
+      ORDER BY DateRegister DESC
+    `;
 
     const result = await request.query(query);
 
@@ -29,10 +28,6 @@ router.get('/', async (req: express.Request, res: express.Response) => {
         .status(500)
         .json({ message: 'An error occurred while retrieving registrations' });
     }
-  } finally {
-    if (pool) {
-      await pool.close();
-    }
   }
 });
 
@@ -40,14 +35,13 @@ router.post(
   '/post',
   upload.none(),
   async (req: express.Request, res: express.Response) => {
-    let pool: sql.ConnectionPool | null = null;
     try {
-      // Connect to the database
-      pool = await sql.connect(connectionConfig);
+      // Use the global connection pool
+      await sql.connect(connectionConfig);
 
       // Get the latest Code
       const querySelect = 'SELECT ACCOUNTNO FROM MTR_SYSTEM_CONFIG';
-      const resultSelect = await pool.request().query(querySelect);
+      const resultSelect = await sql.query(querySelect); // Using global pool for queries
       const prefixNumber =
         resultSelect.recordset[0].ACCOUNTNO.toString().substr(0, 6);
       console.log(prefixNumber, 'prefixNumber');
@@ -82,14 +76,14 @@ router.post(
 
       // INSERT query
       const queryInsert = `
-        INSERT INTO MTR_REGISTRATION 
+        INSERT INTO MTR_REGISTRATION
         (Code, SponsorID, LastName, FirstName, MiddleInitial, Address, ContactNumber, EmailAddress, DateRegister, Status, isCreatedOnline, UserPassword)
         OUTPUT INSERTED.Code, INSERTED.ControlNo
         VALUES (@Code, @SponsorID, @LastName, @FirstName, @MiddleInitial, @Address, @ContactNumber, @EmailAddress, @DateRegister, @Status, @isCreatedOnline, @UserPassword)
       `;
 
       // Create a new request object and add parameters
-      const request = pool.request();
+      const request = new sql.Request();
       request.input('Code', sql.VarChar, accountNumber);
       request.input('SponsorID', sql.VarChar, SponsorID);
       request.input('LastName', sql.VarChar, lastName);
@@ -103,7 +97,7 @@ router.post(
       request.input('isCreatedOnline', sql.Char(1), isCreatedOnline);
       request.input('UserPassword', sql.VarChar, userPassword);
 
-      // Execute the query
+      // Execute the insert query
       const resultInsert = await request.query(queryInsert);
 
       // Send the response
@@ -114,8 +108,9 @@ router.post(
         controlNo: resultInsert.recordset[0].ControlNo,
       });
 
+      // Update the account number in the system config
       const queryUpdate = 'UPDATE MTR_SYSTEM_CONFIG SET ACCOUNTNO = @newCode';
-      const requestUpdate = pool.request();
+      const requestUpdate = new sql.Request();
       requestUpdate.input('newCode', sql.VarChar, accountNumber);
       await requestUpdate.query(queryUpdate);
     } catch (err) {
@@ -124,10 +119,6 @@ router.post(
         status: 'error',
         message: 'An error occurred during registration',
       });
-    } finally {
-      if (pool) {
-        await pool.close();
-      }
     }
   },
 );

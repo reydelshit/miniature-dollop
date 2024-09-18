@@ -15,17 +15,17 @@ Object.defineProperty(exports, "__esModule", { value: true });
 exports.loginRouter = void 0;
 const express_1 = require("express");
 const jsonwebtoken_1 = __importDefault(require("jsonwebtoken"));
-const msnodesqlv8_1 = __importDefault(require("mssql/msnodesqlv8"));
 const connectionConfig_1 = require("../connections/connectionConfig");
+// change to import sql from 'mssql' when deploying
+const msnodesqlv8_1 = __importDefault(require("mssql/msnodesqlv8"));
 const router = (0, express_1.Router)();
 const SECRET_KEY = 'livewell@2024';
 // LOGIN API
 router.post('/', (req, res) => __awaiter(void 0, void 0, void 0, function* () {
     const { username, password } = req.body;
-    let pool = null;
     try {
-        pool = yield msnodesqlv8_1.default.connect(connectionConfig_1.connectionConfig);
-        const request = new msnodesqlv8_1.default.Request(pool);
+        yield msnodesqlv8_1.default.connect(connectionConfig_1.connectionConfig);
+        const request = new msnodesqlv8_1.default.Request();
         const query = 'SELECT * FROM MTR_REGISTRATION WHERE EmailAddress = @EmailAddress  AND UserPassword = @UserPassword';
         const queryInsert = {
             username: username,
@@ -43,7 +43,7 @@ router.post('/', (req, res) => __awaiter(void 0, void 0, void 0, function* () {
             const token = jsonwebtoken_1.default.sign({ userId: user.Code, username: user.EmailAddress }, SECRET_KEY, { expiresIn: '1h' });
             res.cookie('token', token, {
                 httpOnly: true,
-                secure: process.env.NODE_ENV === 'production',
+                secure: process.env.NODE_ENV === 'DEV',
                 sameSite: 'lax',
             });
             return res.json({ message: 'Login successful', token: token });

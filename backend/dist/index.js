@@ -18,24 +18,26 @@ const cors_1 = __importDefault(require("cors"));
 const dotenv_1 = __importDefault(require("dotenv"));
 const express_1 = __importDefault(require("express"));
 const connectionConfig_1 = require("./connections/connectionConfig");
-const msnodesqlv8_1 = __importDefault(require("mssql/msnodesqlv8"));
 const loginRoute_1 = require("./api/loginRoute");
 const registerRoutes_1 = require("./api/registerRoutes");
 const sponsorsRoute_1 = require("./api/sponsorsRoute");
+// change to import sql from 'mssql' when deploying
+const msnodesqlv8_1 = __importDefault(require("mssql/msnodesqlv8"));
 dotenv_1.default.config();
 const app = (0, express_1.default)();
 const PORT = process.env.PORT || 8800;
 app.use(express_1.default.json());
 app.use((0, cors_1.default)({
-    // origin: 'https://miniature-dollop-omega.vercel.app',
-    origin: 'http://localhost:5173',
+    origin: process.env.NODE_ENV === 'PROD'
+        ? process.env.BACKEND_URL
+        : process.env.FRONTEND_URL,
     credentials: true,
 }));
 app.use((0, cookie_parser_1.default)());
 function connectToDatabase() {
     return __awaiter(this, void 0, void 0, function* () {
         try {
-            const pool = msnodesqlv8_1.default.connect(connectionConfig_1.connectionConfig);
+            const pool = yield msnodesqlv8_1.default.connect(connectionConfig_1.connectionConfig);
             console.log('Database connected successfully');
             return pool;
         }
@@ -54,8 +56,8 @@ app.use('/login', loginRoute_1.loginRouter);
 app.post('/logout', (req, res) => {
     res.clearCookie('token', {
         httpOnly: true,
-        // secure: process.env.NODE_ENV === 'production',
-        secure: true,
+        secure: process.env.NODE_ENV === 'PROD',
+        // secure: true,
         sameSite: 'strict',
     });
     res.json({ message: 'Logged out successfully' });

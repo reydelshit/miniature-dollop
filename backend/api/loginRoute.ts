@@ -1,8 +1,9 @@
 import { NextFunction, Request, Response, Router } from 'express';
 import jwt, { JwtPayload, VerifyErrors } from 'jsonwebtoken';
-import sql from 'mssql/msnodesqlv8';
-
 import { connectionConfig } from '../connections/connectionConfig';
+
+// change to import sql from 'mssql' when deploying
+import sql from 'mssql/msnodesqlv8';
 
 const router = Router();
 const SECRET_KEY = 'livewell@2024';
@@ -20,10 +21,9 @@ interface AuthenticatedRequest extends Request {
 router.post('/', async (req, res) => {
   const { username, password } = req.body;
 
-  let pool: sql.ConnectionPool | null = null;
   try {
-    pool = await sql.connect(connectionConfig);
-    const request = new sql.Request(pool);
+    await sql.connect(connectionConfig);
+    const request = new sql.Request();
 
     const query =
       'SELECT * FROM MTR_REGISTRATION WHERE EmailAddress = @EmailAddress  AND UserPassword = @UserPassword';
@@ -53,7 +53,7 @@ router.post('/', async (req, res) => {
 
       res.cookie('token', token, {
         httpOnly: true,
-        secure: process.env.NODE_ENV === 'production',
+        secure: process.env.NODE_ENV === 'DEV',
         sameSite: 'lax',
       });
       return res.json({ message: 'Login successful', token: token });

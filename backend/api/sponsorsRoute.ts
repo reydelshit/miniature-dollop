@@ -1,15 +1,15 @@
 import { Request, Response, Router } from 'express';
+import { connectionConfig } from '../connections/connectionConfig';
+
+// change to import sql from 'mssql' when deploying
 import sql from 'mssql/msnodesqlv8';
 
-import { connectionConfig } from '../connections/connectionConfig';
 const router = Router();
 
 router.get('/', async (req: Request, res: Response) => {
-  let pool: sql.ConnectionPool | null = null;
-
   try {
-    pool = await sql.connect(connectionConfig);
-    const request = new sql.Request(pool);
+    await sql.connect(connectionConfig);
+    const request = new sql.Request();
 
     const query = 'SELECT * FROM MTR_DEALER';
     const result = await request.query(query);
