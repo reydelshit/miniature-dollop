@@ -81,6 +81,15 @@ const Register = () => {
   } = useSWR(`${import.meta.env.VITE_SERVER_LINK}/sponsors`, fetcher);
 
   const onSubmit: SubmitHandler<Inputs> = async (data) => {
+    if (!selectedSponsors) {
+      toast({
+        title: 'Error',
+        description: 'Please select a sponsor.',
+        variant: 'destructive',
+      });
+      return;
+    }
+
     const formData = new FormData();
 
     const completeAddress = `${data.street}, ${data.barangay}, ${data.city}, ${region}, ${country}, ${data.postal}`;
@@ -124,7 +133,7 @@ const Register = () => {
 
       toast({
         title: 'Error',
-        description: 'An error occurred while adding the student.',
+        description: 'An error occurred while registering an account.',
         variant: 'destructive',
       });
     } finally {

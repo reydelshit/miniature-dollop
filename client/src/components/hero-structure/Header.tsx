@@ -62,7 +62,9 @@ const Header = () => {
                 Login
               </Button>
             </DialogTrigger>
-            <DialogContent className="h-[650px] w-[700px]">
+            <DialogContent
+              className={`"w-[700px]" ${status === 'register' ? 'h-fit' : 'h-[650px]'}`}
+            >
               <DialogHeader className="grid h-[50px] w-full place-content-center place-items-center text-center">
                 <DialogTitle className="text-2xl font-semibold">
                   {' '}
