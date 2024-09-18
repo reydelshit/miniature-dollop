@@ -15,7 +15,6 @@ import Calendar from './pages/authenticated/Calendar';
 import ErrorPage from './pages/ErrorPage';
 
 axios.defaults.withCredentials = true;
-
 const router = createBrowserRouter([
   {
     path: '/',

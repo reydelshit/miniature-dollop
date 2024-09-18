@@ -12,14 +12,18 @@ import Register from '@/pages/Register';
 import { useSwitchPanel } from '@/store/store';
 import { ShoppingCart } from 'lucide-react';
 import { Button } from '../ui/button';
+import { useLocation } from 'react-router-dom';
 
 const Header = () => {
   const status = useSwitchPanel((state) => state.status);
+
+  const { hash } = useLocation();
+
   return (
     <div className="flex h-[8rem] w-full items-center justify-center p-4">
       <div className="mx-auto flex w-[90%] max-w-[1200px] items-center justify-between">
         <div className="flex items-center gap-10">
-          <img className="w-20" src={Logo} alt="logo" />
+          <img className="w-12" src={Logo} alt="logo" />
           {/* <h1
             className="cursor-pointer text-center text-2xl text-white"
             onClick={() => navigate('/')}
@@ -28,41 +32,49 @@ const Header = () => {
           </h1> */}
         </div>
 
-        {/* <div className="ml-[-1.5rem] flex gap-8">
+        <div className="ml-[8rem] flex gap-4">
           <a
-            className="w-[8rem] rounded-2xl bg-white p-2 text-center text-sm uppercase text-black hover:text-black"
+            className={`${hash === '#shop' ? 'bg-white text-black' : 'bg-black bg-opacity-40 text-white'} h-fit w-[6rem] rounded-3xl p-2 text-center text-xs font-semibold uppercase hover:bg-white hover:text-black`}
+            href="#shop"
+          >
+            Shop
+          </a>
+          <a
+            className={`${hash === '#about' ? 'bg-white text-black' : 'bg-black bg-opacity-40 text-white'} h-fit w-[6rem] rounded-3xl p-2 text-center text-xs font-semibold uppercase hover:bg-white hover:text-black`}
             href="#about"
           >
             About
           </a>
 
           <a
-            className="w-[8rem] rounded-2xl bg-white p-2 text-center text-sm uppercase text-black hover:text-black"
+            className={`${hash === '#services' ? 'bg-white text-black' : 'bg-black bg-opacity-40 text-white'} h-fit w-[6rem] rounded-3xl p-2 text-center text-xs font-semibold uppercase hover:bg-white hover:text-black`}
             href="#services"
           >
             Services
           </a>
 
           <a
-            className="w-[8rem] rounded-2xl bg-white p-2 text-center text-sm uppercase text-black hover:text-black"
+            className={`${hash === '#contact' ? 'bg-white text-black' : 'bg-black bg-opacity-40 text-white'} h-fit w-[6rem] rounded-3xl p-2 text-center text-xs font-semibold uppercase hover:bg-white hover:text-black`}
             href="#contact"
           >
             Contact
           </a>
-        </div> */}
+        </div>
 
         <div className="flex items-center gap-4">
           <ShoppingCart className="text-white" />
           <Dialog>
             <DialogTrigger>
               <Button
-                className="w-[8rem] rounded-full border-2 border-white bg-transparent text-white"
+                className="h-[2rem] w-[7rem] rounded-full border-2 border-white bg-transparent text-white"
                 onClick={() => useSwitchPanel.getState().setStatus('login')}
               >
                 Login
               </Button>
             </DialogTrigger>
-            <DialogContent className="h-[650px] w-[700px]">
+            <DialogContent
+              className={`"w-[700px]" ${status === 'register' ? 'h-fit' : 'h-[650px]'}`}
+            >
               <DialogHeader className="grid h-[50px] w-full place-content-center place-items-center text-center">
                 <DialogTitle className="text-2xl font-semibold">
                   {' '}

@@ -1,11 +1,10 @@
 import cookieParser from 'cookie-parser';
 import cors from 'cors';
 import dotenv from 'dotenv';
-import express, { Express, Request } from 'express';
-import { JwtPayload } from 'jsonwebtoken';
+import express, { Express } from 'express';
 import { connectionConfig } from './connections/connectionConfig';
 
-import sql from 'mssql/msnodesqlv8';
+import sql from 'mssql';
 import { loginRouter } from './api/loginRoute';
 import { registerRouter } from './api/registerRoutes';
 import { sponsorsRouter } from './api/sponsorsRoute';
@@ -13,12 +12,11 @@ import { sponsorsRouter } from './api/sponsorsRoute';
 dotenv.config();
 const app: Express = express();
 const PORT = process.env.PORT || 8800;
-export const handler = app;
 
 app.use(express.json());
 app.use(
   cors({
-    origin: 'http://localhost:5173',
+    origin: 'https://miniature-dollop-omega.vercel.app',
     credentials: true,
   }),
 );
@@ -27,6 +25,7 @@ app.use(cookieParser());
 export async function connectToDatabase() {
   try {
     const pool = await sql.connect(connectionConfig);
+    console.log('Database connected successfully');
     return pool;
   } catch (err) {
     console.error('Database connection failed:', err);
@@ -45,7 +44,8 @@ app.use('/login', loginRouter);
 app.post('/logout', (req, res) => {
   res.clearCookie('token', {
     httpOnly: true,
-    secure: process.env.NODE_ENV === 'production',
+    // secure: process.env.NODE_ENV === 'production',
+    secure: true,
     sameSite: 'strict',
   });
 
@@ -55,3 +55,5 @@ app.post('/logout', (req, res) => {
 app.use((req, res) => {
   res.status(404).json({ message: '404 - Not Found' });
 });
+
+export default app;

@@ -1,6 +1,6 @@
 import { NextFunction, Request, Response, Router } from 'express';
 import jwt, { JwtPayload, VerifyErrors } from 'jsonwebtoken';
-import sql from 'mssql/msnodesqlv8';
+import sql from 'mssql';
 import { connectionConfig } from '../connections/connectionConfig';
 
 const router = Router();
@@ -53,7 +53,7 @@ router.post('/', async (req, res) => {
       res.cookie('token', token, {
         httpOnly: true,
         secure: process.env.NODE_ENV === 'production',
-        sameSite: 'strict',
+        sameSite: 'none',
       });
       return res.json({ message: 'Login successful', token: token });
     }
@@ -71,18 +71,26 @@ const authenticateToken = (
 ) => {
   const token = req.cookies.token;
 
-  if (!token)
-    return res.json({
+  if (!token) {
+    return res.status(401).json({
       isAuthenticated: false,
       message: 'Token not found',
       status: 401,
     });
+  }
 
   jwt.verify(
     token,
     SECRET_KEY,
     (err: VerifyErrors | null, decoded: unknown) => {
-      if (err) return res.sendStatus(403);
+      if (err) {
+        console.error('JWT Verification Error:', err);
+        return res.status(403).json({
+          isAuthenticated: false,
+          message: 'Invalid token',
+          status: 403,
+        });
+      }
 
       const user = decoded as UserPayload;
       req.user = user;

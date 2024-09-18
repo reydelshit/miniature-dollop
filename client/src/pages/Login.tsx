@@ -1,13 +1,14 @@
 import { Button } from '@/components/ui/button';
 import { Input } from '@/components/ui/input';
 import { Label } from '@/components/ui/label';
+import { useToast } from '@/hooks/use-toast';
 import { useSwitchPanel } from '@/store/store';
 import axios from 'axios';
 import { useState } from 'react';
 
 const Login = () => {
   const { status, toggle } = useSwitchPanel();
-
+  const { toast } = useToast();
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
 
@@ -27,11 +28,21 @@ const Login = () => {
       );
       console.log(response.data);
 
-      if (response.data.token && response.data.message === 'Login successful') {
+      const { message, token } = response.data;
+
+      if (message === 'Login successful' && token) {
+        console.log('Login successful');
+
         window.location.href = '/dashboard';
       }
     } catch (error) {
       console.error('Error during login:', error);
+
+      toast({
+        title: 'Error',
+        description: 'An error occurred while logging in. Please try again.',
+        variant: 'destructive',
+      });
     }
   };
   return (
