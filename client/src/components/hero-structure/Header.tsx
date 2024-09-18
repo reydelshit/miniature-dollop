@@ -11,8 +11,8 @@ import Login from '@/pages/Login';
 import Register from '@/pages/Register';
 import { useSwitchPanel } from '@/store/store';
 import { ShoppingCart } from 'lucide-react';
-import { Button } from '../ui/button';
 import { useLocation } from 'react-router-dom';
+import { Button } from '../ui/button';
 
 const Header = () => {
   const status = useSwitchPanel((state) => state.status);
@@ -34,39 +34,37 @@ const Header = () => {
 
         <div className="ml-[8rem] flex gap-4">
           <a
-            className={`${hash === '#shop' ? 'bg-white text-black' : 'bg-black bg-opacity-40 text-white'} h-fit w-[6rem] rounded-3xl p-2 text-center text-xs font-semibold uppercase hover:bg-white hover:text-black`}
-            href="#shop"
+            href="#products"
+            className={`${hash === '#products' ? 'border-b-4 border-yellow-300' : '?'}`}
           >
-            Shop
+            Products
           </a>
           <a
-            className={`${hash === '#about' ? 'bg-white text-black' : 'bg-black bg-opacity-40 text-white'} h-fit w-[6rem] rounded-3xl p-2 text-center text-xs font-semibold uppercase hover:bg-white hover:text-black`}
             href="#about"
+            className={`${hash === '#about' ? 'border-b-4 border-yellow-300' : '?'}`}
           >
-            About
+            About us
           </a>
-
           <a
-            className={`${hash === '#services' ? 'bg-white text-black' : 'bg-black bg-opacity-40 text-white'} h-fit w-[6rem] rounded-3xl p-2 text-center text-xs font-semibold uppercase hover:bg-white hover:text-black`}
             href="#services"
+            className={`${hash === '#services' ? 'border-b-4 border-yellow-300' : '?'}`}
           >
             Services
           </a>
-
           <a
-            className={`${hash === '#contact' ? 'bg-white text-black' : 'bg-black bg-opacity-40 text-white'} h-fit w-[6rem] rounded-3xl p-2 text-center text-xs font-semibold uppercase hover:bg-white hover:text-black`}
             href="#contact"
+            className={`${hash === '#contact' ? 'border-b-4 border-yellow-300' : '?'}`}
           >
-            Contact
+            Contact us
           </a>
         </div>
 
         <div className="flex items-center gap-4">
-          <ShoppingCart className="text-white" />
+          <ShoppingCart className="cursor-pointer text-yellow-300" />
           <Dialog>
             <DialogTrigger>
               <Button
-                className="h-[2rem] w-[7rem] rounded-full border-2 border-white bg-transparent text-white"
+                className="h-[2rem] w-[7rem] rounded-full bg-yellow-300 text-black"
                 onClick={() => useSwitchPanel.getState().setStatus('login')}
               >
                 Login
