@@ -1,12 +1,26 @@
-export const connectionConfig = {
-  server: 'REYDELSHIT',
-  database: 'LIVEWELL',
-  options: {
-    trustedConnection: true,
-    trustServerCertificate: true,
-  },
-  driver: 'msnodesqlv8',
-};
+const isProduction = process.env.NODE_ENV === 'PROD';
+
+export const connectionConfig = isProduction
+  ? {
+      server: 'mssql-183603-0.cloudclusters.net',
+      port: 10077,
+      database: 'LIVEWELLCLOUD',
+      user: 'admin',
+      password: 'Admin123',
+      options: {
+        // trustedConnection: true,
+        trustServerCertificate: true,
+      },
+    }
+  : {
+      server: 'REYDELSHIT',
+      database: 'LIVEWELL',
+      options: {
+        trustedConnection: true,
+        trustServerCertificate: true,
+      },
+      driver: 'msnodesqlv8',
+    };
 
 // export const connectionConfig = `Driver={SQL Server Native Client 11.0};Server=REYDELSHIT;Database=LIVEWELL;Trusted_Connection=yes;`;
 
