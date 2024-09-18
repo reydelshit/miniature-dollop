@@ -1,5 +1,6 @@
 import { Request, Response, Router } from 'express';
-import sql from 'mssql';
+import sql from 'mssql/msnodesqlv8';
+
 import { connectionConfig } from '../connections/connectionConfig';
 const router = Router();
 

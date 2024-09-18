@@ -15,7 +15,7 @@ Object.defineProperty(exports, "__esModule", { value: true });
 exports.loginRouter = void 0;
 const express_1 = require("express");
 const jsonwebtoken_1 = __importDefault(require("jsonwebtoken"));
-const mssql_1 = __importDefault(require("mssql"));
+const msnodesqlv8_1 = __importDefault(require("mssql/msnodesqlv8"));
 const connectionConfig_1 = require("../connections/connectionConfig");
 const router = (0, express_1.Router)();
 const SECRET_KEY = 'livewell@2024';
@@ -24,15 +24,15 @@ router.post('/', (req, res) => __awaiter(void 0, void 0, void 0, function* () {
     const { username, password } = req.body;
     let pool = null;
     try {
-        pool = yield mssql_1.default.connect(connectionConfig_1.connectionConfig);
-        const request = new mssql_1.default.Request(pool);
+        pool = yield msnodesqlv8_1.default.connect(connectionConfig_1.connectionConfig);
+        const request = new msnodesqlv8_1.default.Request(pool);
         const query = 'SELECT * FROM MTR_REGISTRATION WHERE EmailAddress = @EmailAddress  AND UserPassword = @UserPassword';
         const queryInsert = {
             username: username,
             password: password,
         };
-        request.input('EmailAddress', mssql_1.default.VarChar, queryInsert.username);
-        request.input('UserPassword', mssql_1.default.VarChar, queryInsert.password);
+        request.input('EmailAddress', msnodesqlv8_1.default.VarChar, queryInsert.username);
+        request.input('UserPassword', msnodesqlv8_1.default.VarChar, queryInsert.password);
         const result = yield request.query(query);
         const users = result.recordset;
         if (users.length === 0) {
@@ -44,7 +44,7 @@ router.post('/', (req, res) => __awaiter(void 0, void 0, void 0, function* () {
             res.cookie('token', token, {
                 httpOnly: true,
                 secure: process.env.NODE_ENV === 'production',
-                sameSite: 'none',
+                sameSite: 'lax',
             });
             return res.json({ message: 'Login successful', token: token });
         }

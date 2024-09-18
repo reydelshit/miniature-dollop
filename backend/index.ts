@@ -4,7 +4,7 @@ import dotenv from 'dotenv';
 import express, { Express } from 'express';
 import { connectionConfig } from './connections/connectionConfig';
 
-import sql from 'mssql';
+import sql from 'mssql/msnodesqlv8';
 import { loginRouter } from './api/loginRoute';
 import { registerRouter } from './api/registerRoutes';
 import { sponsorsRouter } from './api/sponsorsRoute';
@@ -16,7 +16,8 @@ const PORT = process.env.PORT || 8800;
 app.use(express.json());
 app.use(
   cors({
-    origin: 'https://miniature-dollop-omega.vercel.app',
+    // origin: 'https://miniature-dollop-omega.vercel.app',
+    origin: 'http://localhost:5173',
     credentials: true,
   }),
 );
@@ -24,7 +25,7 @@ app.use(cookieParser());
 
 export async function connectToDatabase() {
   try {
-    const pool = await sql.connect(connectionConfig);
+    const pool = sql.connect(connectionConfig);
     console.log('Database connected successfully');
     return pool;
   } catch (err) {
