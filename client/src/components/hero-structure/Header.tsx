@@ -17,13 +17,13 @@ import { useLocation } from 'react-router-dom';
 const Header = () => {
   const status = useSwitchPanel((state) => state.status);
 
-  const path = useLocation().pathname;
+  const { hash } = useLocation();
 
   return (
     <div className="flex h-[8rem] w-full items-center justify-center p-4">
       <div className="mx-auto flex w-[90%] max-w-[1200px] items-center justify-between">
         <div className="flex items-center gap-10">
-          <img className="w-20" src={Logo} alt="logo" />
+          <img className="w-12" src={Logo} alt="logo" />
           {/* <h1
             className="cursor-pointer text-center text-2xl text-white"
             onClick={() => navigate('/')}
@@ -32,29 +32,29 @@ const Header = () => {
           </h1> */}
         </div>
 
-        <div className="ml-[5rem] flex gap-4">
+        <div className="ml-[8rem] flex gap-4">
           <a
-            className={`${path === '/#shop' ? 'bg-white' : 'bg-black bg-opacity-40'} w-[8rem] rounded-3xl pt-2.5 text-center text-sm font-semibold uppercase text-white hover:bg-white hover:text-black`}
+            className={`${hash === '#shop' ? 'bg-white text-black' : 'bg-black bg-opacity-40 text-white'} h-fit w-[6rem] rounded-3xl p-2 text-center text-xs font-semibold uppercase hover:bg-white hover:text-black`}
             href="#shop"
           >
             Shop
           </a>
           <a
-            className="h-[2.5rem] w-[8rem] rounded-3xl bg-black bg-opacity-40 pt-2.5 text-center text-sm font-semibold uppercase text-white hover:bg-white hover:text-black"
+            className={`${hash === '#about' ? 'bg-white text-black' : 'bg-black bg-opacity-40 text-white'} h-fit w-[6rem] rounded-3xl p-2 text-center text-xs font-semibold uppercase hover:bg-white hover:text-black`}
             href="#about"
           >
             About
           </a>
 
           <a
-            className="h-[2.5rem] w-[8rem] rounded-3xl bg-black bg-opacity-40 pt-2.5 text-center text-sm font-semibold uppercase text-white hover:bg-white hover:text-black"
+            className={`${hash === '#services' ? 'bg-white text-black' : 'bg-black bg-opacity-40 text-white'} h-fit w-[6rem] rounded-3xl p-2 text-center text-xs font-semibold uppercase hover:bg-white hover:text-black`}
             href="#services"
           >
             Services
           </a>
 
           <a
-            className="bbg-black w-[8rem] rounded-3xl bg-black bg-opacity-40 pt-2.5 text-center text-sm font-semibold uppercase text-white hover:bg-white hover:text-black"
+            className={`${hash === '#contact' ? 'bg-white text-black' : 'bg-black bg-opacity-40 text-white'} h-fit w-[6rem] rounded-3xl p-2 text-center text-xs font-semibold uppercase hover:bg-white hover:text-black`}
             href="#contact"
           >
             Contact
@@ -66,7 +66,7 @@ const Header = () => {
           <Dialog>
             <DialogTrigger>
               <Button
-                className="w-[8rem] rounded-full border-2 border-white bg-transparent text-white"
+                className="h-[2rem] w-[7rem] rounded-full border-2 border-white bg-transparent text-white"
                 onClick={() => useSwitchPanel.getState().setStatus('login')}
               >
                 Login
