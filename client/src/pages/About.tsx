@@ -8,7 +8,7 @@ const About = () => {
           ABOUT US.
         </h1>
 
-        <div className="flex w-full gap-4">
+        <div className="flex w-full gap-8">
           <img
             className="h-[400px] w-[400px] rounded-2xl object-cover"
             src={Healthy}

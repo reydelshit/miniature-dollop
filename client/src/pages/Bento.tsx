@@ -86,7 +86,7 @@ const Bento = () => {
           <div className="flex h-full w-[70%] flex-col gap-6">
             <div className="h-[1300px] w-full overflow-hidden rounded-3xl bg-black">
               <Player
-                autoPlay={true}
+                // autoPlay={true}
                 poster="https://w0.peakpx.com/wallpaper/127/1000/HD-wallpaper-avengers-poster-hero-endgame-marvel-film-poster-art.jpg"
                 src="https://media.w3.org/2010/05/sintel/trailer_hd.mp4"
               />

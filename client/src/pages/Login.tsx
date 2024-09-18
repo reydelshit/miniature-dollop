@@ -33,7 +33,7 @@ const Login = () => {
       if (message === 'Login successful' && token) {
         console.log('Login successful');
 
-        window.location.href = '/dashboard';
+        // window.location.href = '/dashboard';
       }
     } catch (error) {
       console.error('Error during login:', error);

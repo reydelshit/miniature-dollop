@@ -1,4 +1,6 @@
+import BoneSetting from '@/assets/bones.jpg';
 import Healthy from '@/assets/healthy.jpg';
+import QMRA from '@/assets/qmra.jpg';
 const Services = () => {
   return (
     <>
@@ -31,8 +33,8 @@ const Services = () => {
         <div className="flex h-[500px] w-full items-center justify-center bg-[#E6E5E5]">
           <div className="flex w-[90%] max-w-[1200px] flex-row-reverse gap-4">
             <img
-              className="h-[250px] w-[500px] rounded-2xl object-cover"
-              src={Healthy}
+              className="h-[400px] w-[80%] rounded-2xl object-contain"
+              src={BoneSetting}
               alt="leathy"
             />
             <div className="flex flex-col items-center justify-center">
@@ -51,8 +53,8 @@ const Services = () => {
 
         <div className="flex h-[500px] w-[90%] max-w-[1200px] items-center gap-4">
           <img
-            className="h-[250px] w-[500px] rounded-2xl object-cover"
-            src={Healthy}
+            className="h-[400px] w-[80%] rounded-2xl object-contain"
+            src={QMRA}
             alt="leathy"
           />
           <div className="flex flex-col items-center justify-center">
