@@ -16,6 +16,7 @@ exports.connectToDatabase = connectToDatabase;
 const cookie_parser_1 = __importDefault(require("cookie-parser"));
 const cors_1 = __importDefault(require("cors"));
 const dotenv_1 = __importDefault(require("dotenv"));
+dotenv_1.default.config();
 const express_1 = __importDefault(require("express"));
 const connectionConfig_1 = require("./connections/connectionConfig");
 const loginRoute_1 = require("./api/loginRoute");
@@ -23,7 +24,6 @@ const registerRoutes_1 = require("./api/registerRoutes");
 const sponsorsRoute_1 = require("./api/sponsorsRoute");
 // change to import sql from 'mssql' when deploying
 const mssql_1 = __importDefault(require("mssql"));
-dotenv_1.default.config();
 const app = (0, express_1.default)();
 const PORT = process.env.PORT || 8800;
 app.use(express_1.default.json());

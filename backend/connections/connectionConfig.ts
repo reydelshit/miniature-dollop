@@ -1,5 +1,7 @@
 const isProduction = process.env.NODE_ENV === 'PROD';
 
+console.log('isProduction:', isProduction);
+
 export const connectionConfig = isProduction
   ? {
       server: 'mssql-183603-0.cloudclusters.net',
@@ -8,7 +10,7 @@ export const connectionConfig = isProduction
       user: 'admin',
       password: 'Admin123',
       options: {
-        trustedConnection: true,
+        // trustedConnection: true,
         trustServerCertificate: true,
       },
     }

@@ -2,6 +2,7 @@
 Object.defineProperty(exports, "__esModule", { value: true });
 exports.connectionConfig = void 0;
 const isProduction = process.env.NODE_ENV === 'PROD';
+console.log('isProduction:', isProduction);
 exports.connectionConfig = isProduction
     ? {
         server: 'mssql-183603-0.cloudclusters.net',
@@ -10,7 +11,7 @@ exports.connectionConfig = isProduction
         user: 'admin',
         password: 'Admin123',
         options: {
-            trustedConnection: true,
+            // trustedConnection: true,
             trustServerCertificate: true,
         },
     }
