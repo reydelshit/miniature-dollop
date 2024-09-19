@@ -1,5 +1,5 @@
 import LiveWellProd from '@/assets/livewellprod.png';
-import Header from '@/components/hero-structure/Header';
+import Header from '@/components/hero/Header';
 import { Button } from '@/components/ui/button';
 import { ArrowDown } from 'lucide-react';
 
@@ -10,28 +10,32 @@ import About from './About';
 import Footer from './Footer';
 import Product from './Product';
 
+// main bg bg-[#F5F5F2]
+
 const HeroPage = () => {
   return (
-    <div className="relative h-full w-full overflow-y-auto bg-[#F5F5F2]">
-      <div className="flex h-full flex-col items-center justify-center text-black">
+    <div className="relative h-full w-full bg-[#2C1B11] text-[#FFF4E5]">
+      <div className="flex h-full w-full flex-col items-center justify-center">
         <Header />
 
-        <div className="relative mt-[2rem] h-[700px] w-[90%] max-w-[1200px]">
-          <div className="flex items-center justify-between">
-            <div className="w-[50%] space-y-4 break-words text-black">
-              <span className="text-sm text-black opacity-70">
+        <div className="relative flex h-[680px] w-[90%] max-w-[1200px] items-center justify-center">
+          <div className="flex items-center justify-center text-center">
+            <div className="w-[70%] space-y-4 break-words text-[#FFF4E5]">
+              <span className="text-sm text-[#FFF4E5] opacity-70">
                 hello, welcome!
               </span>
-              <h1 className="break-words text-5xl font-bold leading-tight">
-                <span className="bg-yellow-300 px-2">Discover</span> a Healthier
-                Lifestyle Today
+              <h1 className="font-Alegraya break-words text-6xl leading-tight">
+                <span className="bg-yellow-300 px-2 font-semibold italic text-[#2C1B11]">
+                  Discover
+                </span>{' '}
+                a Healthier Lifestyle Today
               </h1>
               <p className="cursor-pointer p-2 text-lg opacity-70 hover:underline">
                 Explore →
               </p>
             </div>
 
-            <div className="relative">
+            {/* <div className="relative">
               <img
                 src={LiveWellProd}
                 alt="Product"
@@ -52,11 +56,11 @@ const HeroPage = () => {
                   Join now
                 </Button>
               </div>
-            </div>
+            </div> */}
           </div>
 
           {/* Bottom Section */}
-          <div className="mt-12 flex items-center justify-between">
+          {/* <div className="mt-12 flex items-center justify-between">
             <p className="max-w-[300px] text-sm text-black opacity-70">
               Our PharmaZinc products are specially formulated to enhance your
               immune system and promote overall well-being. With our unique
@@ -71,16 +75,16 @@ const HeroPage = () => {
                 More Products
               </Button>
             </div>
-          </div>
+          </div> */}
         </div>
-      </div>
 
-      <div className="flex h-full flex-col items-center justify-center">
-        <Bento />
-        <Product />
-        <Services />
-        <About />
-        <Footer />
+        <div className="flex h-full w-full flex-col items-center justify-center">
+          <Bento />
+          <Product />
+          <Services />
+          <About />
+          <Footer />
+        </div>
       </div>
     </div>
   );

@@ -11,6 +11,9 @@ export default {
     extend: {
       fontFamily: {
         Meddon: ['Meddon', 'cursive'],
+        Rowdie: ['Rowdies', 'sans-serif'],
+        Alegraya: ['Alegreya', 'serif'],
+        Rokkit: ['Rokkitt', 'serif'],
       },
       borderRadius: {
         lg: 'var(--radius)',

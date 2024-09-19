@@ -4,7 +4,7 @@ const About = () => {
   return (
     <>
       <div className="mb-[6rem] mt-[2rem] flex h-full w-[90%] max-w-[1200px] flex-col items-center justify-center">
-        <h1 className="w-fit bg-yellow-300 p-2 text-center text-4xl font-bold text-[#4D4E4E]">
+        <h1 className="w-fit bg-yellow-300 p-2 text-center text-4xl font-bold italic text-[#2C1B11]">
           ABOUT US.
         </h1>
 
@@ -15,10 +15,10 @@ const About = () => {
             alt="leathy"
           />
           <div className="flex flex-col items-center justify-center">
-            <h1 className="my-8 w-full text-start text-4xl font-semibold text-[#4D4E4E]">
+            <h1 className="my-8 w-full text-start text-4xl font-semibold text-[#FFF4E5]">
               Our Mission & Vision
             </h1>
-            <p className="text-xl text-[#4D4E4E]">
+            <p className="text-xl text-[#FFF4E5]">
               LiveWell Marketing Corporation, established on July 10, 2024, is
               dedicated to promoting health awareness and well-being through
               innovative solutions. Our mission is to empower individuals to

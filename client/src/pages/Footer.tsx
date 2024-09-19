@@ -6,7 +6,7 @@ const Footer = () => {
 
   return (
     <>
-      <div className="flex h-[400px] w-full flex-col items-center justify-center bg-[#E6E5E5]">
+      <div className="flex h-[400px] w-full flex-col items-center justify-center">
         <div className="flex gap-4">
           <a
             href="#products"

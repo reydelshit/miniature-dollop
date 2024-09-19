@@ -20,16 +20,10 @@ const Header = () => {
   const { hash } = useLocation();
 
   return (
-    <div className="flex h-[8rem] w-full items-center justify-center p-4">
-      <div className="mx-auto flex w-[90%] max-w-[1200px] items-center justify-between">
-        <div className="flex items-center gap-10">
+    <div className="sticky top-0 z-30 flex h-[4rem] w-full items-center justify-center bg-[#2C1B11] p-4 text-[#FFF4E5]">
+      <div className="mx-auto flex w-[100%] max-w-[1200px] items-center justify-between">
+        {/* <div className="flex items-center gap-10">
           <img className="w-12" src={Logo} alt="logo" />
-          {/* <h1
-            className="cursor-pointer text-center text-2xl text-white"
-            onClick={() => navigate('/')}
-          >
-            LiveWell
-          </h1> */}
         </div>
 
         <div className="ml-[8rem] flex gap-4">
@@ -88,6 +82,41 @@ const Header = () => {
               {status === 'login' ? <Login /> : <Register />}
             </DialogContent>
           </Dialog>
+        </div> */}
+
+        <div className="flex w-[100%] items-center justify-between">
+          <div>
+            <img className="w-10" src={Logo} alt="logo" />
+          </div>
+
+          <div className="flex gap-6">
+            <a
+              href="#products"
+              className={`${hash === '#products' ? 'border-b-2 border-yellow-300' : ''} text-sm`}
+            >
+              Products
+            </a>
+            <a
+              href="#about"
+              className={`${hash === '#about' ? 'border-b-2 border-yellow-300' : ''} text-sm`}
+            >
+              About us
+            </a>
+            <a
+              href="#services"
+              className={`${hash === '#services' ? 'border-b-2 border-yellow-300' : ''} text-sm`}
+            >
+              Services
+            </a>
+            <a
+              href="#contact"
+              className={`${hash === '#contact' ? 'border-b-2 border-yellow-300' : ''} text-sm`}
+            >
+              Contact us
+            </a>
+          </div>
+
+          <span className="text-sm">Login →</span>
         </div>
       </div>
     </div>
