@@ -3,7 +3,7 @@ Object.defineProperty(exports, "__esModule", { value: true });
 exports.connectionConfig = void 0;
 const isProduction = process.env.NODE_ENV === 'PROD';
 console.log('isProduction:', isProduction);
-exports.connectionConfig = isProduction
+exports.connectionConfig = !isProduction
     ? {
         server: 'mssql-183603-0.cloudclusters.net',
         port: 10077,
