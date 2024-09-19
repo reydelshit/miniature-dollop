@@ -4,15 +4,17 @@ import ReactDOM from 'react-dom/client';
 import { createBrowserRouter, RouterProvider } from 'react-router-dom';
 import AuthWrapper from './components/AuthWrapper';
 import './index.css';
+import Calendar from './pages/authenticated/Calendar';
 import Dashboard from './pages/authenticated/Dashboard';
-import HeroPage from './pages/HeroPage';
-import Root from './pages/Root';
-import Shop from './pages/authenticated/Shop';
 import DashboardAuth from './pages/authenticated/DashboardAuth';
 import Merchant from './pages/authenticated/Merchant';
+import Orders from './pages/authenticated/Orders';
 import Profile from './pages/authenticated/Profile';
-import Calendar from './pages/authenticated/Calendar';
+import Shop from './pages/authenticated/Shop';
 import ErrorPage from './pages/ErrorPage';
+import Login from './pages/Login';
+import Register from './pages/Register';
+import Root from './pages/Root';
 
 axios.defaults.withCredentials = true;
 const router = createBrowserRouter([
@@ -23,11 +25,11 @@ const router = createBrowserRouter([
     children: [
       {
         path: 'login',
-        element: <HeroPage />,
+        element: <Login />,
       },
       {
         path: 'register',
-        element: <HeroPage />,
+        element: <Register />,
       },
       {
         path: 'dashboard',
@@ -56,6 +58,10 @@ const router = createBrowserRouter([
           {
             path: 'calendars',
             element: <Calendar />,
+          },
+          {
+            path: 'orders',
+            element: <Orders />,
           },
         ],
       },

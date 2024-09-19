@@ -19,17 +19,16 @@ const multer_1 = __importDefault(require("multer"));
 const connectionConfig_1 = require("../connections/connectionConfig");
 const router = (0, express_1.Router)();
 const upload = (0, multer_1.default)();
-// fetch all register
+// Fetch all registrations
 router.get('/', (req, res) => __awaiter(void 0, void 0, void 0, function* () {
-    console.log('fetching all registrations');
-    let pool = null;
+    console.log('Fetching all registrations');
     try {
-        pool = yield mssql_1.default.connect(connectionConfig_1.connectionConfig);
-        const request = new mssql_1.default.Request(pool);
+        yield mssql_1.default.connect(connectionConfig_1.connectionConfig);
+        const request = new mssql_1.default.Request();
         const query = `
-        SELECT * FROM MTR_REGISTRATION
-        ORDER BY DateRegister DESC
-      `;
+      SELECT * FROM MTR_REGISTRATION
+      ORDER BY DateRegister DESC
+    `;
         const result = yield request.query(query);
         res.json(result.recordset);
     }
@@ -41,20 +40,14 @@ router.get('/', (req, res) => __awaiter(void 0, void 0, void 0, function* () {
                 .json({ message: 'An error occurred while retrieving registrations' });
         }
     }
-    finally {
-        if (pool) {
-            yield pool.close();
-        }
-    }
 }));
 router.post('/post', upload.none(), (req, res) => __awaiter(void 0, void 0, void 0, function* () {
-    let pool = null;
     try {
-        // Connect to the database
-        pool = yield mssql_1.default.connect(connectionConfig_1.connectionConfig);
+        // Use the global connection pool
+        yield mssql_1.default.connect(connectionConfig_1.connectionConfig);
         // Get the latest Code
         const querySelect = 'SELECT ACCOUNTNO FROM MTR_SYSTEM_CONFIG';
-        const resultSelect = yield pool.request().query(querySelect);
+        const resultSelect = yield mssql_1.default.query(querySelect); // Using global pool for queries
         const prefixNumber = resultSelect.recordset[0].ACCOUNTNO.toString().substr(0, 6);
         console.log(prefixNumber, 'prefixNumber');
         const addLeadingZero = (text, targetLength) => {
@@ -70,13 +63,13 @@ router.post('/post', upload.none(), (req, res) => __awaiter(void 0, void 0, void
         const dateRegister = new Date().toISOString();
         // INSERT query
         const queryInsert = `
-        INSERT INTO MTR_REGISTRATION 
+        INSERT INTO MTR_REGISTRATION
         (Code, SponsorID, LastName, FirstName, MiddleInitial, Address, ContactNumber, EmailAddress, DateRegister, Status, isCreatedOnline, UserPassword)
         OUTPUT INSERTED.Code, INSERTED.ControlNo
         VALUES (@Code, @SponsorID, @LastName, @FirstName, @MiddleInitial, @Address, @ContactNumber, @EmailAddress, @DateRegister, @Status, @isCreatedOnline, @UserPassword)
       `;
         // Create a new request object and add parameters
-        const request = pool.request();
+        const request = new mssql_1.default.Request();
         request.input('Code', mssql_1.default.VarChar, accountNumber);
         request.input('SponsorID', mssql_1.default.VarChar, SponsorID);
         request.input('LastName', mssql_1.default.VarChar, lastName);
@@ -89,7 +82,7 @@ router.post('/post', upload.none(), (req, res) => __awaiter(void 0, void 0, void
         request.input('Status', mssql_1.default.VarChar, status);
         request.input('isCreatedOnline', mssql_1.default.Char(1), isCreatedOnline);
         request.input('UserPassword', mssql_1.default.VarChar, userPassword);
-        // Execute the query
+        // Execute the insert query
         const resultInsert = yield request.query(queryInsert);
         // Send the response
         res.status(201).json({
@@ -98,8 +91,9 @@ router.post('/post', upload.none(), (req, res) => __awaiter(void 0, void 0, void
             code: resultInsert.recordset[0].Code,
             controlNo: resultInsert.recordset[0].ControlNo,
         });
+        // Update the account number in the system config
         const queryUpdate = 'UPDATE MTR_SYSTEM_CONFIG SET ACCOUNTNO = @newCode';
-        const requestUpdate = pool.request();
+        const requestUpdate = new mssql_1.default.Request();
         requestUpdate.input('newCode', mssql_1.default.VarChar, accountNumber);
         yield requestUpdate.query(queryUpdate);
     }
@@ -109,11 +103,6 @@ router.post('/post', upload.none(), (req, res) => __awaiter(void 0, void 0, void
             status: 'error',
             message: 'An error occurred during registration',
         });
-    }
-    finally {
-        if (pool) {
-            yield pool.close();
-        }
     }
 }));
 exports.registerRouter = router;
