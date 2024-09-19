@@ -1,5 +1,6 @@
 import Logo from '@/assets/logo.png';
 import { ShoppingCart } from 'lucide-react';
+import { useEffect, useState } from 'react';
 import { Link, useLocation } from 'react-router-dom';
 
 const Header = () => {
@@ -8,8 +9,29 @@ const Header = () => {
   const { hash } = useLocation();
   const path = useLocation().pathname;
 
+  const [isHeaderVisible, setIsHeaderVisible] = useState(true);
+  let lastScrollTop = 0;
+
+  useEffect(() => {
+    const handleScroll = () => {
+      const currentScroll =
+        window.pageYOffset || document.documentElement.scrollTop;
+      if (currentScroll > lastScrollTop) {
+        setIsHeaderVisible(false);
+      } else {
+        setIsHeaderVisible(true);
+      }
+      lastScrollTop = currentScroll <= 0 ? 0 : currentScroll; // For Mobile or negative scrolling
+    };
+
+    window.addEventListener('scroll', handleScroll);
+    return () => window.removeEventListener('scroll', handleScroll);
+  }, []);
+
   return (
-    <div className="bg-mainColor text-lightText sticky top-0 z-30 flex h-[4rem] w-full items-center justify-center p-4">
+    <div
+      className={`bg-mainColor text-lightText sticky top-0 z-30 flex h-[4rem] w-full items-center justify-center p-4 ${isHeaderVisible ? 'header-visible' : 'header-hidden'}`}
+    >
       <div className="mx-auto flex w-[100%] max-w-[1200px] items-center justify-between">
         <div className="flex w-[100%] items-center justify-between">
           <div>

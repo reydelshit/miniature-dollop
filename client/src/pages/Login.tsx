@@ -3,7 +3,7 @@ import { Button } from '@/components/ui/button';
 import { Input } from '@/components/ui/input';
 import { Label } from '@/components/ui/label';
 import { useToast } from '@/hooks/use-toast';
-import axios from 'axios';
+import axios, { AxiosError } from 'axios';
 import { useState } from 'react';
 import { Link } from 'react-router-dom';
 
@@ -38,12 +38,23 @@ const Login = () => {
       }
     } catch (error) {
       console.error('Error during login:', error);
+      if (error instanceof AxiosError) {
+        console.error('Error during login:', error);
 
-      toast({
-        title: 'Error',
-        description: 'An error occurred while logging in. Please try again.',
-        variant: 'destructive',
-      });
+        if (
+          error.response?.status === 401 &&
+          error.response?.data?.message === 'Invalid credentials'
+        ) {
+          toast({
+            title: 'Invalid credentials',
+            description: 'Please check your email and password and try again.',
+            variant: 'destructive',
+          });
+        }
+      } else {
+        // Handle non-Axios errors or rethrow
+        console.error('Unexpected error:', error);
+      }
     }
   };
   return (

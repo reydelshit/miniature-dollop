@@ -11,7 +11,8 @@ import { registerRouter } from './api/registerRoutes';
 import { sponsorsRouter } from './api/sponsorsRoute';
 
 // change to import sql from 'mssql' when deploying
-import sql from 'mssql';
+// import sql from 'mssql';
+import sql from 'mssql/msnodesqlv8';
 
 const app: Express = express();
 const PORT = process.env.PORT || 8800;

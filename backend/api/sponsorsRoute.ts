@@ -2,7 +2,9 @@ import { Request, Response, Router } from 'express';
 import { connectionConfig } from '../connections/connectionConfig';
 
 // change to import sql from 'mssql' when deploying
-import sql from 'mssql';
+// import sql from 'mssql';
+
+import sql from 'mssql/msnodesqlv8';
 
 const router = Router();
 

@@ -23,7 +23,8 @@ const loginRoute_1 = require("./api/loginRoute");
 const registerRoutes_1 = require("./api/registerRoutes");
 const sponsorsRoute_1 = require("./api/sponsorsRoute");
 // change to import sql from 'mssql' when deploying
-const mssql_1 = __importDefault(require("mssql"));
+// import sql from 'mssql';
+const msnodesqlv8_1 = __importDefault(require("mssql/msnodesqlv8"));
 const app = (0, express_1.default)();
 const PORT = process.env.PORT || 8800;
 console.log('NODE_ENV in Vercel:', process.env.NODE_ENV);
@@ -47,7 +48,7 @@ app.use((req, res, next) => {
 function connectToDatabase() {
     return __awaiter(this, void 0, void 0, function* () {
         try {
-            const pool = yield mssql_1.default.connect(connectionConfig_1.connectionConfig);
+            const pool = yield msnodesqlv8_1.default.connect(connectionConfig_1.connectionConfig);
             console.log('Database connected successfully');
             return pool;
         }
