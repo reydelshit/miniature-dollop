@@ -10,7 +10,7 @@ exports.connectionConfig = isProduction
         user: 'admin',
         password: 'Admin123',
         options: {
-            // trustedConnection: true,
+            trustedConnection: true,
             trustServerCertificate: true,
         },
     }
