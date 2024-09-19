@@ -1,8 +1,8 @@
+import dotenv from 'dotenv';
+dotenv.config();
+
 import cookieParser from 'cookie-parser';
 import cors from 'cors';
-import dotenv from 'dotenv';
-
-dotenv.config();
 
 import express, { Express } from 'express';
 import { connectionConfig } from './connections/connectionConfig';
