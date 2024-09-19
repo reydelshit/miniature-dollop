@@ -1,13 +1,14 @@
+import Header from '@/components/hero/Header';
 import { Button } from '@/components/ui/button';
 import { Input } from '@/components/ui/input';
 import { Label } from '@/components/ui/label';
 import { useToast } from '@/hooks/use-toast';
-import { useSwitchPanel } from '@/store/store';
 import axios from 'axios';
 import { useState } from 'react';
+import { Link } from 'react-router-dom';
 
 const Login = () => {
-  const { status, toggle } = useSwitchPanel();
+  // const { status, toggle } = useSwitchPanel();
   const { toast } = useToast();
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
@@ -46,42 +47,53 @@ const Login = () => {
     }
   };
   return (
-    <div className="mt-[-5rem] flex h-full w-full flex-col items-center justify-center">
-      <div className="w-full text-center">
-        <h1 className="text-2xl font-semibold">Login</h1>
-        <p>Enter your email and password to login</p>
+    <div className="bg-mainColor text-lightText relative h-screen w-full">
+      <Header />
+
+      <div className="flex h-full w-full flex-col items-center justify-center">
+        <div className="bg-cardColor h-[70%] w-[40%] rounded-lg p-4">
+          <div className="flex h-full w-full flex-col items-center justify-center">
+            <div className="w-full text-center">
+              <h1 className="text-2xl font-semibold">Login</h1>
+              <p>Enter your email and password to login</p>
+            </div>
+            <form
+              onSubmit={handleSubmitLogin}
+              className="block w-[80%] p-8 text-center"
+            >
+              <div className="text-start">
+                <Label>Email</Label>
+                <Input
+                  onChange={(e) => setEmail(e.target.value)}
+                  type="email"
+                />
+              </div>
+              <div className="mt-4 text-start">
+                <Label>Password</Label>
+                <Input
+                  onChange={(e) => setPassword(e.target.value)}
+                  type="password"
+                />
+              </div>
+
+              <span className="my-4 block text-start text-sm font-semibold">
+                Having trouble signing in?
+              </span>
+
+              <Button className="w-[8rem]" type="submit">
+                Login
+              </Button>
+
+              <span className="my-4 block text-center text-sm font-semibold">
+                Don't have an account?{' '}
+                <Link to="/register" className="cursor-pointer">
+                  Register
+                </Link>
+              </span>
+            </form>
+          </div>
+        </div>
       </div>
-      <form
-        onSubmit={handleSubmitLogin}
-        className="block w-[80%] p-8 text-center"
-      >
-        <div className="text-start">
-          <Label>Email</Label>
-          <Input onChange={(e) => setEmail(e.target.value)} type="email" />
-        </div>
-        <div className="mt-4 text-start">
-          <Label>Password</Label>
-          <Input
-            onChange={(e) => setPassword(e.target.value)}
-            type="password"
-          />
-        </div>
-
-        <span className="my-4 block text-start text-sm font-semibold">
-          Having trouble signing in?
-        </span>
-
-        <Button className="w-[8rem]" type="submit">
-          Login
-        </Button>
-
-        <span className="my-4 block text-center text-sm font-semibold">
-          Don't have an account?{' '}
-          <span className="cursor-pointer" onClick={toggle}>
-            {status === 'login' ? 'Register' : 'Login'}
-          </span>
-        </span>
-      </form>
     </div>
   );
 };

@@ -21,10 +21,10 @@ export default {
         sm: 'calc(var(--radius) - 4px)',
       },
       colors: {
-        mainColor: '#2C1B11',
-        secondaryColor: '#FDCE59',
-        cardColor: '#4A3427',
-        lightText: '#FFF4E5',
+        mainColor: '#F7F7F7',
+        secondaryColor: '#FF7F3E',
+        cardColor: '#F0EDE8',
+        lightText: '#111111',
         background: 'hsl(var(--background))',
         foreground: 'hsl(var(--foreground))',
         card: {

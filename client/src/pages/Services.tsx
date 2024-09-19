@@ -4,9 +4,12 @@ import QMRA from '@/assets/qmra.jpg';
 const Services = () => {
   return (
     <>
-      <div className="my-[4rem] flex h-fit w-full flex-col items-center justify-center">
+      <div
+        id="services"
+        className="my-[4rem] flex h-fit w-full flex-col items-center justify-center"
+      >
         <div className='text-start" mt-[2rem] w-[90%] max-w-[1200px]'>
-          <h1 className="bg-secondaryColor w-fit p-2 text-4xl font-bold italic text-[#2C1B11]">
+          <h1 className="w-fit p-2 text-4xl font-bold italic text-[#2C1B11]">
             Our Serivces.
           </h1>
         </div>
@@ -18,10 +21,10 @@ const Services = () => {
             alt="leathy"
           />
           <div className="flex flex-col items-start justify-center text-start">
-            <h1 className="my-8 w-fit p-2 text-start text-4xl font-semibold text-[#FFF4E5]">
+            <h1 className="text-lightText my-8 w-fit p-2 text-start text-4xl font-semibold">
               EYE SPA
             </h1>
-            <p className="text-xl text-[#FFF4E5]">
+            <p className="text-lightText text-xl">
               Eye Spa - helps to avoid dry eye conditions such as burning,
               itching, and the feeling of foreign particles. It helps relief
               from several eye strain symptoms. It keeps your eyes refreshed and
@@ -30,7 +33,7 @@ const Services = () => {
           </div>
         </div>
 
-        <div className="bg-secondaryColor flex h-[500px] w-full items-center justify-center">
+        <div className="bg-cardColor flex h-[500px] w-full items-center justify-center">
           <div className="flex w-[90%] max-w-[1200px] flex-row-reverse gap-4">
             <img
               className="h-[400px] w-[80%] rounded-2xl object-contain"
@@ -58,10 +61,10 @@ const Services = () => {
             alt="leathy"
           />
           <div className="flex flex-col items-center justify-center">
-            <h1 className="my-8 w-full text-start text-4xl font-semibold text-[#FFF4E5]">
+            <h1 className="text-lightText my-8 w-full text-start text-4xl font-semibold">
               QMRA
             </h1>
-            <p className="text-xl text-[#FFF4E5]">
+            <p className="text-lightText text-xl">
               Quantum Magnetic Resonance Analyzer. It is designed in order to
               detect the magnetic field of the human cells and consequently
               through a meticulous analysis process to estimate the health state
@@ -70,7 +73,7 @@ const Services = () => {
           </div>
         </div>
 
-        <div className="bg-secondaryColor flex h-[500px] w-full items-center justify-center text-[#2C1B11]">
+        <div className="bg-cardColor flex h-[500px] w-full items-center justify-center text-[#2C1B11]">
           <div className="flex w-[90%] max-w-[1200px] flex-row-reverse gap-4">
             <img
               className="h-[250px] w-[500px] rounded-2xl object-cover"

@@ -3,14 +3,17 @@ import { Button } from '@/components/ui/button';
 
 const Product = () => {
   return (
-    <div className="relative mb-4 mt-[5rem] h-full w-[90%] max-w-[1200px]">
-      <h1 className="bg-secondaryColor my-4 w-fit p-2 text-4xl font-bold italic text-[#2C1B11]">
+    <div
+      id="products"
+      className="relative mb-4 mt-[5rem] h-full w-[90%] max-w-[1200px]"
+    >
+      <h1 className="my-4 w-fit p-2 text-4xl font-bold italic text-[#2C1B11]">
         Products.
       </h1>
       <div className="grid h-[800px] grid-cols-4 grid-rows-2 gap-5">
-        <div className="h-fit w-full overflow-hidden rounded-md bg-[#4A3427] shadow-md">
+        <div className="bg-cardColor h-fit w-full overflow-hidden rounded-md shadow-md">
           <img className="h-[15rem] w-full" src={ProductDummy} alt="product" />
-          <div className="flex h-[100%] flex-col justify-between bg-[#4A3427] p-4">
+          <div className="bg-cardColor flex h-[100%] flex-col justify-between p-4">
             <div className="flex w-full justify-between">
               <div>
                 <h1 className="text-2xl font-semibold">Terrapin</h1>
@@ -24,9 +27,9 @@ const Product = () => {
             </Button>
           </div>
         </div>
-        <div className="h-fit w-full overflow-hidden rounded-md bg-[#4A3427] shadow-md">
+        <div className="bg-cardColor h-fit w-full overflow-hidden rounded-md shadow-md">
           <img className="h-[15rem] w-full" src={ProductDummy} alt="product" />
-          <div className="flex h-[100%] flex-col justify-between bg-[#4A3427] p-4">
+          <div className="bg-cardColor flex h-[100%] flex-col justify-between p-4">
             <div className="flex w-full justify-between">
               <div>
                 <h1 className="text-2xl font-semibold">Terrapin</h1>
@@ -40,9 +43,9 @@ const Product = () => {
             </Button>
           </div>
         </div>
-        <div className="h-fit w-full overflow-hidden rounded-md bg-[#4A3427] shadow-md">
+        <div className="bg-cardColor h-fit w-full overflow-hidden rounded-md shadow-md">
           <img className="h-[15rem] w-full" src={ProductDummy} alt="product" />
-          <div className="flex h-[100%] flex-col justify-between bg-[#4A3427] p-4">
+          <div className="bg-cardColor flex h-[100%] flex-col justify-between p-4">
             <div className="flex w-full justify-between">
               <div>
                 <h1 className="text-2xl font-semibold">Terrapin</h1>
@@ -56,9 +59,9 @@ const Product = () => {
             </Button>
           </div>
         </div>
-        <div className="h-fit w-full overflow-hidden rounded-md bg-[#4A3427] shadow-md">
+        <div className="bg-cardColor h-fit w-full overflow-hidden rounded-md shadow-md">
           <img className="h-[15rem] w-full" src={ProductDummy} alt="product" />
-          <div className="flex h-[100%] flex-col justify-between bg-[#4A3427] p-4">
+          <div className="bg-cardColor flex h-[100%] flex-col justify-between p-4">
             <div className="flex w-full justify-between">
               <div>
                 <h1 className="text-2xl font-semibold">Terrapin</h1>
@@ -72,9 +75,9 @@ const Product = () => {
             </Button>
           </div>
         </div>
-        <div className="h-fit w-full overflow-hidden rounded-md bg-[#4A3427] shadow-md">
+        <div className="bg-cardColor h-fit w-full overflow-hidden rounded-md shadow-md">
           <img className="h-[15rem] w-full" src={ProductDummy} alt="product" />
-          <div className="flex h-[100%] flex-col justify-between bg-[#4A3427] p-4">
+          <div className="bg-cardColor flex h-[100%] flex-col justify-between p-4">
             <div className="flex w-full justify-between">
               <div>
                 <h1 className="text-2xl font-semibold">Terrapin</h1>
@@ -88,9 +91,9 @@ const Product = () => {
             </Button>
           </div>
         </div>{' '}
-        <div className="h-fit w-full overflow-hidden rounded-md bg-[#4A3427] shadow-md">
+        <div className="bg-cardColor h-fit w-full overflow-hidden rounded-md shadow-md">
           <img className="h-[15rem] w-full" src={ProductDummy} alt="product" />
-          <div className="flex h-[100%] flex-col justify-between bg-[#4A3427] p-4">
+          <div className="bg-cardColor flex h-[100%] flex-col justify-between p-4">
             <div className="flex w-full justify-between">
               <div>
                 <h1 className="text-2xl font-semibold">Terrapin</h1>

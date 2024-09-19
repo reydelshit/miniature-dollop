@@ -1,122 +1,70 @@
 import Logo from '@/assets/logo.png';
-import {
-  Dialog,
-  DialogContent,
-  DialogDescription,
-  DialogHeader,
-  DialogTitle,
-  DialogTrigger,
-} from '@/components/ui/dialog';
-import Login from '@/pages/Login';
-import Register from '@/pages/Register';
-import { useSwitchPanel } from '@/store/store';
 import { ShoppingCart } from 'lucide-react';
-import { useLocation } from 'react-router-dom';
-import { Button } from '../ui/button';
+import { Link, useLocation } from 'react-router-dom';
 
 const Header = () => {
-  const status = useSwitchPanel((state) => state.status);
+  // const status = useSwitchPanel((state) => state.status);
 
   const { hash } = useLocation();
+  const path = useLocation().pathname;
 
   return (
-    <div className="sticky top-0 z-30 flex h-[4rem] w-full items-center justify-center bg-[#2C1B11] p-4 text-[#FFF4E5]">
+    <div className="bg-mainColor text-lightText sticky top-0 z-30 flex h-[4rem] w-full items-center justify-center p-4">
       <div className="mx-auto flex w-[100%] max-w-[1200px] items-center justify-between">
-        {/* <div className="flex items-center gap-10">
-          <img className="w-12" src={Logo} alt="logo" />
-        </div>
-
-        <div className="ml-[8rem] flex gap-4">
-          <a
-            href="#products"
-            className={`${hash === '#products' ? 'border-b-4 border-yellow-300' : '?'}`}
-          >
-            Products
-          </a>
-          <a
-            href="#about"
-            className={`${hash === '#about' ? 'border-b-4 border-yellow-300' : '?'}`}
-          >
-            About us
-          </a>
-          <a
-            href="#services"
-            className={`${hash === '#services' ? 'border-b-4 border-yellow-300' : '?'}`}
-          >
-            Services
-          </a>
-          <a
-            href="#contact"
-            className={`${hash === '#contact' ? 'border-b-4 border-yellow-300' : '?'}`}
-          >
-            Contact us
-          </a>
-        </div>
-
-        <div className="flex items-center gap-4">
-          <ShoppingCart className="cursor-pointer text-yellow-300" />
-          <Dialog>
-            <DialogTrigger>
-              <Button
-                className="h-[2rem] w-[7rem] rounded-full bg-yellow-300 text-black"
-                onClick={() => useSwitchPanel.getState().setStatus('login')}
-              >
-                Login
-              </Button>
-            </DialogTrigger>
-            <DialogContent
-              className={`"w-[700px]" ${status === 'register' ? 'h-fit' : 'h-[650px]'}`}
-            >
-              <DialogHeader className="grid h-[50px] w-full place-content-center place-items-center text-center">
-                <DialogTitle className="text-2xl font-semibold">
-                  {' '}
-                  {status === 'login' ? '' : 'Register'}
-                </DialogTitle>
-                <DialogDescription>
-                  {' '}
-                  {status === 'login'
-                    ? ''
-                    : 'Enter the required information to register'}
-                </DialogDescription>
-              </DialogHeader>
-              {status === 'login' ? <Login /> : <Register />}
-            </DialogContent>
-          </Dialog>
-        </div> */}
-
         <div className="flex w-[100%] items-center justify-between">
           <div>
             <img className="w-10" src={Logo} alt="logo" />
           </div>
 
-          <div className="flex gap-6">
+          <div className="mr-[-1rem] flex gap-6">
             <a
-              href="#products"
-              className={`${hash === '#products' ? 'border-b-2 border-yellow-300' : ''} text-sm`}
+              href={
+                path === '/register' || path === '/login'
+                  ? '/#products'
+                  : '/#products'
+              }
+              className={`${hash === '#products' ? 'border-b-2 border-orange-300' : ''} text-sm`}
             >
               Products
             </a>
             <a
-              href="#about"
-              className={`${hash === '#about' ? 'border-b-2 border-yellow-300' : ''} text-sm`}
+              href={
+                path === '/register' || path === '/login'
+                  ? '/#about'
+                  : '/#about'
+              }
+              className={`${hash === '#about' ? 'border-b-2 border-orange-300' : ''} text-sm`}
             >
               About us
             </a>
             <a
-              href="#services"
-              className={`${hash === '#services' ? 'border-b-2 border-yellow-300' : ''} text-sm`}
+              href={
+                path === '/register' || path === '/login'
+                  ? '/#services'
+                  : '/#services'
+              }
+              className={`${hash === '#services' ? 'border-b-2 border-orange-300' : ''} text-sm`}
             >
               Services
             </a>
             <a
-              href="#contact"
-              className={`${hash === '#contact' ? 'border-b-2 border-yellow-300' : ''} text-sm`}
+              href={
+                path === '/register' || path === '/login'
+                  ? '/#contact'
+                  : '/#contact'
+              }
+              className={`${hash === '#contact' ? 'border-b-2 border-orange-300' : ''} text-sm`}
             >
               Contact us
             </a>
           </div>
+          <div className="flex items-center gap-4">
+            <ShoppingCart className="cursor-pointer text-orange-300" />
 
-          <span className="text-sm">Login →</span>
+            <Link to="/login" className="text-sm">
+              Login →
+            </Link>
+          </div>
         </div>
       </div>
     </div>

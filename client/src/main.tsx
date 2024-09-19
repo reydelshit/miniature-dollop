@@ -12,7 +12,8 @@ import Orders from './pages/authenticated/Orders';
 import Profile from './pages/authenticated/Profile';
 import Shop from './pages/authenticated/Shop';
 import ErrorPage from './pages/ErrorPage';
-import HeroPage from './pages/HeroPage';
+import Login from './pages/Login';
+import Register from './pages/Register';
 import Root from './pages/Root';
 
 axios.defaults.withCredentials = true;
@@ -24,11 +25,11 @@ const router = createBrowserRouter([
     children: [
       {
         path: 'login',
-        element: <HeroPage />,
+        element: <Login />,
       },
       {
         path: 'register',
-        element: <HeroPage />,
+        element: <Register />,
       },
       {
         path: 'dashboard',

@@ -10,25 +10,25 @@ const Footer = () => {
         <div className="flex gap-4">
           <a
             href="#products"
-            className={`${hash === '#products' ? 'border-b-4 border-yellow-300' : '?'}`}
+            className={`${hash === '#products' ? 'border-secondaryColor border-b-4' : '?'}`}
           >
             Products
           </a>
           <a
             href="#about"
-            className={`${hash === '#about' ? 'border-b-4 border-yellow-300' : '?'}`}
+            className={`${hash === '#about' ? 'border-secondaryColor border-b-4' : '?'}`}
           >
             About us
           </a>
           <a
             href="#services"
-            className={`${hash === '#services' ? 'border-b-4 border-yellow-300' : '?'}`}
+            className={`${hash === '#services' ? 'border-secondaryColor border-b-4' : '?'}`}
           >
             Services
           </a>
           <a
             href="#contact"
-            className={`${hash === '#contact' ? 'border-b-4 border-yellow-300' : '?'}`}
+            className={`${hash === '#contact' ? 'border-secondaryColor border-b-4' : '?'}`}
           >
             Contact us
           </a>

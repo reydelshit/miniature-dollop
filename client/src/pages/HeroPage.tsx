@@ -1,31 +1,24 @@
-import LiveWellProd from '@/assets/livewellprod.png';
 import Header from '@/components/hero/Header';
-import { Button } from '@/components/ui/button';
-import { ArrowDown } from 'lucide-react';
-
 import 'video-react/dist/video-react.css';
-import Bento from './Bento';
-import Services from './Services';
 import About from './About';
+import Bento from './Bento';
 import Footer from './Footer';
 import Product from './Product';
-
-// main bg bg-[#F5F5F2]
-
+import Services from './Services';
 const HeroPage = () => {
   return (
-    <div className="bg-mainColor relative h-full w-full text-[#FFF4E5]">
+    <div className="bg-mainColor text-lightText relative h-full w-full">
       <div className="flex h-full w-full flex-col items-center justify-center">
         <Header />
 
         <div className="relative flex h-[680px] w-[90%] max-w-[1200px] items-center justify-center">
           <div className="flex items-center justify-center text-center">
-            <div className="w-[70%] space-y-4 break-words text-[#FFF4E5]">
-              <span className="text-sm text-[#FFF4E5] opacity-70">
+            <div className="text-lightText w-[70%] space-y-4 break-words">
+              <span className="text-lightText text-sm opacity-70">
                 hello, welcome!
               </span>
               <h1 className="font-Alegraya break-words text-6xl leading-tight">
-                <span className="text-mainColor bg-secondaryColor px-2 font-semibold italic">
+                <span className="bg-secondaryColor px-2 font-semibold italic text-black">
                   Discover
                 </span>{' '}
                 a Healthier Lifestyle Today
