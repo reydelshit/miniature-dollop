@@ -44,7 +44,7 @@ router.post('/', (req, res) => __awaiter(void 0, void 0, void 0, function* () {
             res.cookie('token', token, {
                 httpOnly: true,
                 secure: process.env.NODE_ENV === 'PROD',
-                sameSite: 'lax',
+                sameSite: process.env.NODE_ENV === 'PROD' ? 'none' : 'strict',
             });
             return res.json({ message: 'Login successful', token: token });
         }
