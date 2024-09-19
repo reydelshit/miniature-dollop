@@ -8,7 +8,7 @@ import { registerRouter } from './api/registerRoutes';
 import { sponsorsRouter } from './api/sponsorsRoute';
 
 // change to import sql from 'mssql' when deploying
-import sql from 'mssql/msnodesqlv8';
+import sql from 'mssql';
 
 dotenv.config();
 const app: Express = express();

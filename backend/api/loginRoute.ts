@@ -3,7 +3,7 @@ import jwt, { JwtPayload, VerifyErrors } from 'jsonwebtoken';
 import { connectionConfig } from '../connections/connectionConfig';
 
 // change to import sql from 'mssql' when deploying
-import sql from 'mssql/msnodesqlv8';
+import sql from 'mssql';
 
 const router = Router();
 const SECRET_KEY = 'livewell@2024';

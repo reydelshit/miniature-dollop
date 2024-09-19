@@ -14,7 +14,7 @@ var __importDefault = (this && this.__importDefault) || function (mod) {
 Object.defineProperty(exports, "__esModule", { value: true });
 exports.registerRouter = void 0;
 const express_1 = require("express");
-const msnodesqlv8_1 = __importDefault(require("mssql/msnodesqlv8"));
+const mssql_1 = __importDefault(require("mssql"));
 const multer_1 = __importDefault(require("multer"));
 const connectionConfig_1 = require("../connections/connectionConfig");
 const router = (0, express_1.Router)();
@@ -23,8 +23,8 @@ const upload = (0, multer_1.default)();
 router.get('/', (req, res) => __awaiter(void 0, void 0, void 0, function* () {
     console.log('Fetching all registrations');
     try {
-        yield msnodesqlv8_1.default.connect(connectionConfig_1.connectionConfig);
-        const request = new msnodesqlv8_1.default.Request();
+        yield mssql_1.default.connect(connectionConfig_1.connectionConfig);
+        const request = new mssql_1.default.Request();
         const query = `
       SELECT * FROM MTR_REGISTRATION
       ORDER BY DateRegister DESC
@@ -44,10 +44,10 @@ router.get('/', (req, res) => __awaiter(void 0, void 0, void 0, function* () {
 router.post('/post', upload.none(), (req, res) => __awaiter(void 0, void 0, void 0, function* () {
     try {
         // Use the global connection pool
-        yield msnodesqlv8_1.default.connect(connectionConfig_1.connectionConfig);
+        yield mssql_1.default.connect(connectionConfig_1.connectionConfig);
         // Get the latest Code
         const querySelect = 'SELECT ACCOUNTNO FROM MTR_SYSTEM_CONFIG';
-        const resultSelect = yield msnodesqlv8_1.default.query(querySelect); // Using global pool for queries
+        const resultSelect = yield mssql_1.default.query(querySelect); // Using global pool for queries
         const prefixNumber = resultSelect.recordset[0].ACCOUNTNO.toString().substr(0, 6);
         console.log(prefixNumber, 'prefixNumber');
         const addLeadingZero = (text, targetLength) => {
@@ -69,19 +69,19 @@ router.post('/post', upload.none(), (req, res) => __awaiter(void 0, void 0, void
         VALUES (@Code, @SponsorID, @LastName, @FirstName, @MiddleInitial, @Address, @ContactNumber, @EmailAddress, @DateRegister, @Status, @isCreatedOnline, @UserPassword)
       `;
         // Create a new request object and add parameters
-        const request = new msnodesqlv8_1.default.Request();
-        request.input('Code', msnodesqlv8_1.default.VarChar, accountNumber);
-        request.input('SponsorID', msnodesqlv8_1.default.VarChar, SponsorID);
-        request.input('LastName', msnodesqlv8_1.default.VarChar, lastName);
-        request.input('FirstName', msnodesqlv8_1.default.VarChar, firstName);
-        request.input('MiddleInitial', msnodesqlv8_1.default.VarChar, middleInitial);
-        request.input('Address', msnodesqlv8_1.default.VarChar, address);
-        request.input('ContactNumber', msnodesqlv8_1.default.VarChar, contactNumber);
-        request.input('EmailAddress', msnodesqlv8_1.default.VarChar, emailAddress);
-        request.input('DateRegister', msnodesqlv8_1.default.DateTime, dateRegister);
-        request.input('Status', msnodesqlv8_1.default.VarChar, status);
-        request.input('isCreatedOnline', msnodesqlv8_1.default.Char(1), isCreatedOnline);
-        request.input('UserPassword', msnodesqlv8_1.default.VarChar, userPassword);
+        const request = new mssql_1.default.Request();
+        request.input('Code', mssql_1.default.VarChar, accountNumber);
+        request.input('SponsorID', mssql_1.default.VarChar, SponsorID);
+        request.input('LastName', mssql_1.default.VarChar, lastName);
+        request.input('FirstName', mssql_1.default.VarChar, firstName);
+        request.input('MiddleInitial', mssql_1.default.VarChar, middleInitial);
+        request.input('Address', mssql_1.default.VarChar, address);
+        request.input('ContactNumber', mssql_1.default.VarChar, contactNumber);
+        request.input('EmailAddress', mssql_1.default.VarChar, emailAddress);
+        request.input('DateRegister', mssql_1.default.DateTime, dateRegister);
+        request.input('Status', mssql_1.default.VarChar, status);
+        request.input('isCreatedOnline', mssql_1.default.Char(1), isCreatedOnline);
+        request.input('UserPassword', mssql_1.default.VarChar, userPassword);
         // Execute the insert query
         const resultInsert = yield request.query(queryInsert);
         // Send the response
@@ -93,8 +93,8 @@ router.post('/post', upload.none(), (req, res) => __awaiter(void 0, void 0, void
         });
         // Update the account number in the system config
         const queryUpdate = 'UPDATE MTR_SYSTEM_CONFIG SET ACCOUNTNO = @newCode';
-        const requestUpdate = new msnodesqlv8_1.default.Request();
-        requestUpdate.input('newCode', msnodesqlv8_1.default.VarChar, accountNumber);
+        const requestUpdate = new mssql_1.default.Request();
+        requestUpdate.input('newCode', mssql_1.default.VarChar, accountNumber);
         yield requestUpdate.query(queryUpdate);
     }
     catch (err) {

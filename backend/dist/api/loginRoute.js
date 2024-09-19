@@ -17,22 +17,22 @@ const express_1 = require("express");
 const jsonwebtoken_1 = __importDefault(require("jsonwebtoken"));
 const connectionConfig_1 = require("../connections/connectionConfig");
 // change to import sql from 'mssql' when deploying
-const msnodesqlv8_1 = __importDefault(require("mssql/msnodesqlv8"));
+const mssql_1 = __importDefault(require("mssql"));
 const router = (0, express_1.Router)();
 const SECRET_KEY = 'livewell@2024';
 // LOGIN API
 router.post('/', (req, res) => __awaiter(void 0, void 0, void 0, function* () {
     const { username, password } = req.body;
     try {
-        yield msnodesqlv8_1.default.connect(connectionConfig_1.connectionConfig);
-        const request = new msnodesqlv8_1.default.Request();
+        yield mssql_1.default.connect(connectionConfig_1.connectionConfig);
+        const request = new mssql_1.default.Request();
         const query = 'SELECT * FROM MTR_REGISTRATION WHERE EmailAddress = @EmailAddress  AND UserPassword = @UserPassword';
         const queryInsert = {
             username: username,
             password: password,
         };
-        request.input('EmailAddress', msnodesqlv8_1.default.VarChar, queryInsert.username);
-        request.input('UserPassword', msnodesqlv8_1.default.VarChar, queryInsert.password);
+        request.input('EmailAddress', mssql_1.default.VarChar, queryInsert.username);
+        request.input('UserPassword', mssql_1.default.VarChar, queryInsert.password);
         const result = yield request.query(query);
         const users = result.recordset;
         if (users.length === 0) {

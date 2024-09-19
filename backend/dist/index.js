@@ -22,7 +22,7 @@ const loginRoute_1 = require("./api/loginRoute");
 const registerRoutes_1 = require("./api/registerRoutes");
 const sponsorsRoute_1 = require("./api/sponsorsRoute");
 // change to import sql from 'mssql' when deploying
-const msnodesqlv8_1 = __importDefault(require("mssql/msnodesqlv8"));
+const mssql_1 = __importDefault(require("mssql"));
 dotenv_1.default.config();
 const app = (0, express_1.default)();
 const PORT = process.env.PORT || 8800;
@@ -37,7 +37,7 @@ app.use((0, cookie_parser_1.default)());
 function connectToDatabase() {
     return __awaiter(this, void 0, void 0, function* () {
         try {
-            const pool = yield msnodesqlv8_1.default.connect(connectionConfig_1.connectionConfig);
+            const pool = yield mssql_1.default.connect(connectionConfig_1.connectionConfig);
             console.log('Database connected successfully');
             return pool;
         }
