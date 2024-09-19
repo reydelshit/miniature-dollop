@@ -79,7 +79,7 @@ const Bento = () => {
   return (
     <>
       <div className="my-[4rem] flex h-[800px] w-[90%] max-w-[1200px] flex-col">
-        <h1 className="my-4 w-fit bg-yellow-300 p-2 text-start text-4xl font-bold italic text-[#2C1B11]">
+        <h1 className="bg-secondaryColor my-4 w-fit p-2 text-start text-4xl font-bold italic text-[#2C1B11]">
           PACKAGES.
         </h1>
 
@@ -93,7 +93,7 @@ const Bento = () => {
             </div>
 
             <div className="flex h-full gap-6">
-              <div className="flex h-full w-[50%] flex-col items-center justify-center gap-4 rounded-3xl bg-[#4A3427] p-4 text-[#FEF3E4] shadow-lg">
+              <div className="bg-cardColor flex h-full w-[50%] flex-col items-center justify-center gap-4 rounded-3xl p-4 text-[#FEF3E4] shadow-lg">
                 <div>
                   <h1 className="font-Rokkit text-3xl font-bold">
                     PharmaZinc - Alkaline Vitamin C
@@ -113,7 +113,7 @@ const Bento = () => {
                   strong and healthy.
                 </p>
               </div>
-              <div className="flex h-full w-[50%] flex-col items-end rounded-3xl bg-[#4A3427] p-4 text-3xl font-bold text-[#FEF3E4] shadow-lg">
+              <div className="bg-cardColor flex h-full w-[50%] flex-col items-end rounded-3xl p-4 text-3xl font-bold text-[#FEF3E4] shadow-lg">
                 <div className="mb-[2rem] w-full text-start">
                   <h1 className="font-Rokkit">Packages</h1>
                 </div>
@@ -162,7 +162,7 @@ const Bento = () => {
           </div>
 
           <div className="flex h-full w-[30%] flex-col gap-6">
-            <div className="h-[60%] rounded-3xl bg-[#4A3427] p-4 text-[#FEF3E4] shadow-xl">
+            <div className="bg-cardColor h-[60%] rounded-3xl p-4 text-[#FEF3E4] shadow-xl">
               {products
                 .filter((prod) => prod.name.includes(activeProduct))
                 .map((product) => (

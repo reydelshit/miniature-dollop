@@ -14,7 +14,7 @@ import Product from './Product';
 
 const HeroPage = () => {
   return (
-    <div className="relative h-full w-full bg-[#2C1B11] text-[#FFF4E5]">
+    <div className="bg-mainColor relative h-full w-full text-[#FFF4E5]">
       <div className="flex h-full w-full flex-col items-center justify-center">
         <Header />
 
@@ -25,7 +25,7 @@ const HeroPage = () => {
                 hello, welcome!
               </span>
               <h1 className="font-Alegraya break-words text-6xl leading-tight">
-                <span className="bg-yellow-300 px-2 font-semibold italic text-[#2C1B11]">
+                <span className="text-mainColor bg-secondaryColor px-2 font-semibold italic">
                   Discover
                 </span>{' '}
                 a Healthier Lifestyle Today
@@ -52,7 +52,7 @@ const HeroPage = () => {
                   living, positivity, and a sense of togetherness.
                 </p>
 
-                <Button className="my-4 rounded-full bg-yellow-300 px-4 py-2 text-black">
+                <Button className="my-4 rounded-full bg-secondaryColor px-4 py-2 text-black">
                   Join now
                 </Button>
               </div>
@@ -67,11 +67,11 @@ const HeroPage = () => {
               blend, you can enjoy the benefits of Vitamin C in a more effective
               and efficient way, ensuring your body stays strong and healthy.
             </p>
-            <Button className="ml-[-10rem] h-[4rem] w-[4rem] animate-bounce rounded-full bg-yellow-300">
+            <Button className="ml-[-10rem] h-[4rem] w-[4rem] animate-bounce rounded-full bg-secondaryColor">
               <ArrowDown className="text-black" size={25} />
             </Button>
             <div className="flex items-center space-x-4">
-              <Button className="rounded-full bg-yellow-300 px-4 py-2 text-black">
+              <Button className="rounded-full bg-secondaryColor px-4 py-2 text-black">
                 More Products
               </Button>
             </div>

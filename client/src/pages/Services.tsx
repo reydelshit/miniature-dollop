@@ -6,7 +6,7 @@ const Services = () => {
     <>
       <div className="my-[4rem] flex h-fit w-full flex-col items-center justify-center">
         <div className='text-start" mt-[2rem] w-[90%] max-w-[1200px]'>
-          <h1 className="w-fit bg-yellow-300 p-2 text-4xl font-bold italic text-[#2C1B11]">
+          <h1 className="bg-secondaryColor w-fit p-2 text-4xl font-bold italic text-[#2C1B11]">
             Our Serivces.
           </h1>
         </div>
@@ -30,7 +30,7 @@ const Services = () => {
           </div>
         </div>
 
-        <div className="flex h-[500px] w-full items-center justify-center bg-[#FCBF26]">
+        <div className="bg-secondaryColor flex h-[500px] w-full items-center justify-center">
           <div className="flex w-[90%] max-w-[1200px] flex-row-reverse gap-4">
             <img
               className="h-[400px] w-[80%] rounded-2xl object-contain"
@@ -70,7 +70,7 @@ const Services = () => {
           </div>
         </div>
 
-        <div className="flex h-[500px] w-full items-center justify-center bg-[#FCBF26] text-[#2C1B11]">
+        <div className="bg-secondaryColor flex h-[500px] w-full items-center justify-center text-[#2C1B11]">
           <div className="flex w-[90%] max-w-[1200px] flex-row-reverse gap-4">
             <img
               className="h-[250px] w-[500px] rounded-2xl object-cover"
