@@ -26,6 +26,7 @@ const sponsorsRoute_1 = require("./api/sponsorsRoute");
 const mssql_1 = __importDefault(require("mssql"));
 const app = (0, express_1.default)();
 const PORT = process.env.PORT || 8800;
+console.log('NODE_ENV in Vercel:', process.env.NODE_ENV);
 app.use(express_1.default.json());
 app.use((0, cors_1.default)({
     origin: process.env.NODE_ENV === 'PROD'

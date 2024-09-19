@@ -16,6 +16,8 @@ import sql from 'mssql';
 const app: Express = express();
 const PORT = process.env.PORT || 8800;
 
+console.log('NODE_ENV in Vercel:', process.env.NODE_ENV);
+
 app.use(express.json());
 app.use(
   cors({
