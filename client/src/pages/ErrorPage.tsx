@@ -4,27 +4,27 @@ import { useEffect, useState } from 'react';
 const ErrorPage = () => {
   const [countdown, setCountdown] = useState(5);
 
-  useEffect(() => {
-    setInterval(() => {
-      setCountdown(countdown - 1);
-    }, 1000);
+  // useEffect(() => {
+  //   setInterval(() => {
+  //     setCountdown(countdown - 1);
+  //   }, 1000);
 
-    // stop the countdown when it reaches 0
-    if (countdown === 0) {
-      clearInterval(countdown);
+  //   // stop the countdown when it reaches 0
+  //   if (countdown === 0) {
+  //     clearInterval(countdown);
 
-      window.location.href = '/';
-      axios
-        .post(`${import.meta.env.VITE_SERVER_LINK}/logout`, {
-          withCredentials: true,
-        })
-        .then((res) => {
-          window.location.href = '/';
+  //     window.location.href = '/';
+  //     axios
+  //       .post(`${import.meta.env.VITE_SERVER_LINK}/logout`, {
+  //         withCredentials: true,
+  //       })
+  //       .then((res) => {
+  //         window.location.href = '/';
 
-          console.log(res.data);
-        });
-    }
-  }, [countdown]);
+  //         console.log(res.data);
+  //       });
+  //   }
+  // }, [countdown]);
 
   return (
     <div className="grid h-screen w-dvw place-content-center place-items-center">

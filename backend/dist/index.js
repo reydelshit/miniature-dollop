@@ -25,6 +25,7 @@ const sponsorsRoute_1 = require("./api/sponsorsRoute");
 // change to import sql from 'mssql' when deploying
 // import sql from 'mssql';
 const msnodesqlv8_1 = __importDefault(require("mssql/msnodesqlv8"));
+const productRoute_1 = require("./api/productRoute");
 const app = (0, express_1.default)();
 const PORT = process.env.PORT || 8800;
 console.log('NODE_ENV in Vercel:', process.env.NODE_ENV);
@@ -64,6 +65,7 @@ app.listen(PORT, () => {
 app.use('/sponsors', sponsorsRoute_1.sponsorsRouter);
 app.use('/register', registerRoutes_1.registerRouter);
 app.use('/login', loginRoute_1.loginRouter);
+app.use('/product', productRoute_1.productRouter);
 app.post('/logout', (req, res) => {
     res.clearCookie('token', {
         httpOnly: true,

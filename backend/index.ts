@@ -13,6 +13,7 @@ import { sponsorsRouter } from './api/sponsorsRoute';
 // change to import sql from 'mssql' when deploying
 // import sql from 'mssql';
 import sql from 'mssql/msnodesqlv8';
+import { productRouter } from './api/productRoute';
 
 const app: Express = express();
 const PORT = process.env.PORT || 8800;
@@ -65,6 +66,7 @@ app.listen(PORT, () => {
 app.use('/sponsors', sponsorsRouter);
 app.use('/register', registerRouter);
 app.use('/login', loginRouter);
+app.use('/product', productRouter);
 
 app.post('/logout', (req, res) => {
   res.clearCookie('token', {
