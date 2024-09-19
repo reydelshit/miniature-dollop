@@ -5,6 +5,7 @@ import Elite from '../assets/elite.png';
 import Executive from '../assets/executive.png';
 import Starlight from '../assets/starlite.png';
 import Trial from '../assets/trial.jpg';
+import ProductDummy from '@/assets/healthy.jpg';
 
 const Bento = () => {
   const [activeProduct, setActiveProduct] = useState('Director');
@@ -87,7 +88,7 @@ const Bento = () => {
             <div className="h-[1300px] w-full overflow-hidden rounded-3xl bg-black">
               <Player
                 // autoPlay={true}
-                poster="https://w0.peakpx.com/wallpaper/127/1000/HD-wallpaper-avengers-poster-hero-endgame-marvel-film-poster-art.jpg"
+                poster={ProductDummy}
                 src="https://media.w3.org/2010/05/sintel/trailer_hd.mp4"
               />
             </div>
@@ -187,7 +188,9 @@ const Bento = () => {
                   </div>
                 ))}
             </div>
-            <div className="h-[30%] rounded-3xl bg-purple-600 p-4">ss</div>
+            <div className="h-[30%] overflow-hidden rounded-3xl bg-purple-600">
+              <img src={ProductDummy} className="h-full w-full" alt="image" />
+            </div>
           </div>
         </div>
       </div>

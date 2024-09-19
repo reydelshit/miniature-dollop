@@ -8,6 +8,7 @@ import Bento from './Bento';
 import Services from './Services';
 import About from './About';
 import Footer from './Footer';
+import Product from './Product';
 
 const HeroPage = () => {
   return (
@@ -76,6 +77,7 @@ const HeroPage = () => {
 
       <div className="flex h-full flex-col items-center justify-center">
         <Bento />
+        <Product />
         <Services />
         <About />
         <Footer />
