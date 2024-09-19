@@ -2,7 +2,7 @@ const isProduction = process.env.NODE_ENV === 'PROD';
 
 console.log('isProduction:', isProduction);
 
-export const connectionConfig = !isProduction
+export const connectionConfig = isProduction
   ? {
       server: 'mssql-183603-0.cloudclusters.net',
       port: 10077,
