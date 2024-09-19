@@ -43,7 +43,7 @@ router.post('/', (req, res) => __awaiter(void 0, void 0, void 0, function* () {
             const token = jsonwebtoken_1.default.sign({ userId: user.Code, username: user.EmailAddress }, SECRET_KEY, { expiresIn: '1h' });
             res.cookie('token', token, {
                 httpOnly: true,
-                secure: process.env.NODE_ENV === 'DEV',
+                secure: process.env.NODE_ENV === 'PROD',
                 sameSite: 'lax',
             });
             return res.json({ message: 'Login successful', token: token });
