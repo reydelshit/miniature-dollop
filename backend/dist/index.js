@@ -29,11 +29,18 @@ const PORT = process.env.PORT || 8800;
 app.use(express_1.default.json());
 app.use((0, cors_1.default)({
     origin: process.env.NODE_ENV === 'PROD'
-        ? process.env.BACKEND_URL
-        : process.env.FRONTEND_URL,
+        ? process.env.PROD_CLIENT_URL
+        : process.env.LOCAL_CLIENT_URL,
     credentials: true,
 }));
 app.use((0, cookie_parser_1.default)());
+app.use((req, res, next) => {
+    res.header('Access-Control-Allow-Origin', process.env.NODE_ENV === 'PROD' ? process.env.PROD_CLIENT_URL : '*');
+    res.header('Access-Control-Allow-Credentials', 'true');
+    res.header('Access-Control-Allow-Methods', 'GET, POST, PUT, DELETE');
+    res.header('Access-Control-Allow-Headers', 'Origin, X-Requested-With, Content-Type, Accept');
+    next();
+});
 function connectToDatabase() {
     return __awaiter(this, void 0, void 0, function* () {
         try {
