@@ -12,7 +12,7 @@ var __importDefault = (this && this.__importDefault) || function (mod) {
     return (mod && mod.__esModule) ? mod : { "default": mod };
 };
 Object.defineProperty(exports, "__esModule", { value: true });
-exports.loginRouter = void 0;
+exports.loginRouter = exports.authenticateToken = void 0;
 const express_1 = require("express");
 const jsonwebtoken_1 = __importDefault(require("jsonwebtoken"));
 const connectionConfig_1 = require("../connections/connectionConfig");
@@ -20,7 +20,7 @@ const connectionConfig_1 = require("../connections/connectionConfig");
 // import sql from 'mssql';
 const msnodesqlv8_1 = __importDefault(require("mssql/msnodesqlv8"));
 const router = (0, express_1.Router)();
-const SECRET_KEY = 'livewell@2024';
+const SECRET_KEY = process.env.JWT_SECRET;
 // LOGIN API
 router.post('/', (req, res) => __awaiter(void 0, void 0, void 0, function* () {
     const { username, password } = req.body;
@@ -41,11 +41,12 @@ router.post('/', (req, res) => __awaiter(void 0, void 0, void 0, function* () {
         }
         const user = users[0];
         if (user) {
+            console.log(user, 'user');
             const token = jsonwebtoken_1.default.sign({ userId: user.Code, username: user.EmailAddress }, SECRET_KEY, { expiresIn: '1h' });
             res.cookie('token', token, {
                 httpOnly: true,
-                secure: process.env.NODE_ENV === 'PROD',
-                sameSite: process.env.NODE_ENV === 'PROD' ? 'none' : 'strict',
+                secure: process.env.NODE_ENV === 'PROD' ? true : false,
+                sameSite: process.env.NODE_ENV === 'PROD' ? 'none' : 'lax',
             });
             return res.json({ message: 'Login successful', token: token });
         }
@@ -74,12 +75,12 @@ const authenticateToken = (req, res, next) => {
                 status: 403,
             });
         }
-        const user = decoded;
-        req.user = user;
+        req.user = decoded;
         next();
     });
 };
-router.get('/check', authenticateToken, (req, res) => {
+exports.authenticateToken = authenticateToken;
+router.get('/check', exports.authenticateToken, (req, res) => {
     res.json({ isAuthenticated: true, user: req.user });
 });
 exports.loginRouter = router;

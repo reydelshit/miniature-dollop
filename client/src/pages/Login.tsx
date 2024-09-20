@@ -58,11 +58,11 @@ const Login = () => {
     }
   };
   return (
-    <div className="bg-mainColor text-lightText relative h-screen w-full">
+    <div className="relative h-screen w-full bg-mainColor text-lightText">
       <Header />
 
       <div className="flex h-full w-full flex-col items-center justify-center">
-        <div className="bg-cardColor h-[70%] w-[40%] rounded-lg p-4">
+        <div className="h-[70%] w-[40%] rounded-lg bg-cardColor p-4">
           <div className="flex h-full w-full flex-col items-center justify-center">
             <div className="w-full text-center">
               <h1 className="text-2xl font-semibold">Login</h1>

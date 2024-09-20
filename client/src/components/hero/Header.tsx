@@ -3,6 +3,15 @@ import { ShoppingCart } from 'lucide-react';
 import { useEffect, useState } from 'react';
 import { Link, useLocation } from 'react-router-dom';
 
+import {
+  Sheet,
+  SheetContent,
+  SheetDescription,
+  SheetHeader,
+  SheetTitle,
+  SheetTrigger,
+} from '@/components/ui/sheet';
+
 const Header = () => {
   // const status = useSwitchPanel((state) => state.status);
 
@@ -30,7 +39,7 @@ const Header = () => {
 
   return (
     <div
-      className={`bg-mainColor text-lightText sticky top-0 z-30 flex h-[4rem] w-full items-center justify-center p-4 ${isHeaderVisible ? 'header-visible' : 'header-hidden'}`}
+      className={`sticky top-0 z-30 flex h-[4rem] w-full items-center justify-center bg-mainColor p-4 text-lightText ${isHeaderVisible ? 'header-visible' : 'header-hidden'}`}
     >
       <div className="mx-auto flex w-[100%] max-w-[1200px] items-center justify-between">
         <div className="flex w-[100%] items-center justify-between">
@@ -81,7 +90,17 @@ const Header = () => {
             </a>
           </div>
           <div className="flex items-center gap-4">
-            <ShoppingCart className="cursor-pointer text-orange-300" />
+            <Sheet>
+              <SheetTrigger>
+                <ShoppingCart className="cursor-pointer text-orange-300" />
+              </SheetTrigger>
+              <SheetContent>
+                <SheetHeader>
+                  <SheetTitle>Cart</SheetTitle>
+                  <SheetDescription>product is empty</SheetDescription>
+                </SheetHeader>
+              </SheetContent>
+            </Sheet>
 
             <Link to="/login" className="text-sm">
               Login →

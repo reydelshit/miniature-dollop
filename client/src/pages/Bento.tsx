@@ -93,7 +93,7 @@ const Bento = () => {
             </div>
 
             <div className="flex h-full gap-6">
-              <div className="bg-cardColor text-lightText flex h-full w-[50%] flex-col items-center justify-center gap-4 rounded-3xl p-4 shadow-lg">
+              <div className="flex h-full w-[50%] flex-col items-center justify-center gap-4 rounded-3xl bg-cardColor p-4 text-lightText shadow-lg">
                 <div>
                   <h1 className="font-Rokkit text-3xl font-bold">
                     PharmaZinc - Alkaline Vitamin C
@@ -113,7 +113,7 @@ const Bento = () => {
                   strong and healthy.
                 </p>
               </div>
-              <div className="bg-cardColor text-lightText flex h-full w-[50%] flex-col items-end rounded-3xl p-4 text-3xl font-bold shadow-lg">
+              <div className="flex h-full w-[50%] flex-col items-end rounded-3xl bg-cardColor p-4 text-3xl font-bold text-lightText shadow-lg">
                 <div className="mb-[2rem] w-full text-start">
                   <h1 className="font-Rokkit">Packages</h1>
                 </div>
@@ -121,7 +121,7 @@ const Bento = () => {
                   onMouseEnter={() => {
                     setActiveProduct('Trial');
                   }}
-                  className={`font-Rokkit hover:text-secondaryColor cursor-pointer ${activeProduct === 'Trial' ? 'text-secondaryColor' : ''} italic`}
+                  className={`cursor-pointer font-Rokkit hover:text-secondaryColor ${activeProduct === 'Trial' ? 'text-secondaryColor' : ''} italic`}
                 >
                   {activeProduct === 'Trial' && '👋'} TRIAL PACKAGE
                 </h1>
@@ -129,7 +129,7 @@ const Bento = () => {
                   onMouseEnter={() => {
                     setActiveProduct('Starlite');
                   }}
-                  className={`font-Rokkit hover:text-secondaryColor cursor-pointer ${activeProduct === 'Startlite' ? 'text-secondaryColor' : ''} italic`}
+                  className={`cursor-pointer font-Rokkit hover:text-secondaryColor ${activeProduct === 'Startlite' ? 'text-secondaryColor' : ''} italic`}
                 >
                   {activeProduct === 'Starlite' && '👋'} STARLIGHT PACKAGE
                 </h1>
@@ -137,7 +137,7 @@ const Bento = () => {
                   onMouseEnter={() => {
                     setActiveProduct('Elite');
                   }}
-                  className={`font-Rokkit hover:text-secondaryColor cursor-pointer ${activeProduct === 'Elite' ? 'text-secondaryColor' : ''} italic`}
+                  className={`cursor-pointer font-Rokkit hover:text-secondaryColor ${activeProduct === 'Elite' ? 'text-secondaryColor' : ''} italic`}
                 >
                   {activeProduct === 'Elite' && '👋'}ELITE PACKAGE
                 </h1>
@@ -145,7 +145,7 @@ const Bento = () => {
                   onMouseEnter={() => {
                     setActiveProduct('Executive');
                   }}
-                  className={`font-Rokkit hover:text-secondaryColor cursor-pointer ${activeProduct === 'Executive' ? 'text-secondaryColor' : ''} italic`}
+                  className={`cursor-pointer font-Rokkit hover:text-secondaryColor ${activeProduct === 'Executive' ? 'text-secondaryColor' : ''} italic`}
                 >
                   {activeProduct === 'Executive' && '👋'} EXECUTIVE PACKAGE
                 </h1>
@@ -153,7 +153,7 @@ const Bento = () => {
                   onMouseEnter={() => {
                     setActiveProduct('Director');
                   }}
-                  className={`font-Rokkit hover:text-secondaryColor cursor-pointer ${activeProduct === 'Director' ? 'text-secondaryColor' : ''} italic`}
+                  className={`cursor-pointer font-Rokkit hover:text-secondaryColor ${activeProduct === 'Director' ? 'text-secondaryColor' : ''} italic`}
                 >
                   {activeProduct === 'Director' && '👋'}DIRECTOR PACKAGE
                 </h1>
@@ -162,12 +162,15 @@ const Bento = () => {
           </div>
 
           <div className="flex h-full w-[30%] flex-col gap-6">
-            <div className="bg-cardColor text-lightText h-[70%] rounded-3xl p-4 shadow-xl">
+            <div className="h-[70%] rounded-3xl bg-cardColor p-4 text-lightText shadow-xl">
               {products
                 .filter((prod) => prod.name.includes(activeProduct))
-                .map((product) => (
-                  <div className="relative flex h-full flex-col justify-center">
-                    <h1 className="font-Rokkit absolute top-5 w-[65%] break-words rounded-md p-2 text-4xl font-bold">
+                .map((product, index) => (
+                  <div
+                    key={index}
+                    className="relative flex h-full flex-col justify-center"
+                  >
+                    <h1 className="absolute top-5 w-[65%] break-words rounded-md p-2 font-Rokkit text-4xl font-bold">
                       {product.name} Package
                     </h1>
 
@@ -208,8 +211,9 @@ const Bento = () => {
             <div className="h-[30%] overflow-hidden rounded-3xl bg-transparent shadow-xl">
               {products
                 .filter((prod) => prod.name.includes(activeProduct))
-                .map((product) => (
+                .map((product, index) => (
                   <img
+                    key={index}
                     src={product.image}
                     className="h-full w-full object-fill"
                     alt="image"

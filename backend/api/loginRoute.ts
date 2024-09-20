@@ -5,18 +5,10 @@ import { connectionConfig } from '../connections/connectionConfig';
 // change to import sql from 'mssql' when deploying
 // import sql from 'mssql';
 import sql from 'mssql/msnodesqlv8';
+import { AuthenticatedRequest, UserPayload } from '../types/auth';
 
 const router = Router();
-const SECRET_KEY = 'livewell@2024';
-
-interface UserPayload extends JwtPayload {
-  userId?: number;
-  username: string;
-}
-
-interface AuthenticatedRequest extends Request {
-  user?: UserPayload;
-}
+const SECRET_KEY = process.env.JWT_SECRET as string;
 
 // LOGIN API
 router.post('/', async (req, res) => {
@@ -46,6 +38,7 @@ router.post('/', async (req, res) => {
     const user = users[0];
 
     if (user) {
+      console.log(user, 'user');
       const token = jwt.sign(
         { userId: user.Code, username: user.EmailAddress },
         SECRET_KEY,
@@ -54,8 +47,8 @@ router.post('/', async (req, res) => {
 
       res.cookie('token', token, {
         httpOnly: true,
-        secure: process.env.NODE_ENV === 'PROD',
-        sameSite: process.env.NODE_ENV === 'PROD' ? 'none' : 'strict',
+        secure: process.env.NODE_ENV === 'PROD' ? true : false,
+        sameSite: process.env.NODE_ENV === 'PROD' ? 'none' : 'lax',
       });
       return res.json({ message: 'Login successful', token: token });
     }
@@ -66,7 +59,7 @@ router.post('/', async (req, res) => {
 });
 
 // VALIDATE TOKEN
-const authenticateToken = (
+export const authenticateToken = (
   req: AuthenticatedRequest,
   res: Response,
   next: NextFunction,
@@ -94,8 +87,7 @@ const authenticateToken = (
         });
       }
 
-      const user = decoded as UserPayload;
-      req.user = user;
+      req.user = decoded as UserPayload;
       next();
     },
   );
