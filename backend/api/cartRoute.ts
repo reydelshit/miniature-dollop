@@ -68,6 +68,46 @@ router.post(
         return res.status(401).json({ message: 'Unauthorized: Invalid user' });
       }
 
+      const querySelect =
+        'SELECT * FROM POS_CART WHERE user_id = @user_id AND product_id = @product_id';
+
+      const requestSelect = new sql.Request();
+      requestSelect.input('user_id', sql.NVarChar, user_id);
+      requestSelect.input('product_id', sql.NVarChar, product_id);
+
+      const resultSelect = await requestSelect.query(querySelect);
+
+      if (resultSelect.recordset.length > 0) {
+        const cartItem = resultSelect.recordset[0];
+        const newQuantity = cartItem.quantity + 1;
+
+        const queryUpdate = `
+        UPDATE POS_CART
+        SET quantity = @quantity
+        WHERE cart_id = @cart_id
+      `;
+
+        const requestUpdate = new sql.Request(); // Create a new request for the update
+        requestUpdate.input('quantity', sql.Int, newQuantity);
+        requestUpdate.input('cart_id', sql.Int, cartItem.cart_id);
+
+        const resultUpdate = await requestUpdate.query(queryUpdate); // Use requestUpdate here
+
+        if (resultUpdate.rowsAffected[0] > 0) {
+          res.status(200).json({
+            status: 'success',
+            message: 'Cart qty updated successfully',
+          });
+        } else {
+          res.status(404).json({
+            status: 'error',
+            message: 'Cart update failed: Cart item not found',
+          });
+        }
+
+        return;
+      }
+
       // INSERT query
       const queryInsert = `
         INSERT INTO POS_CART
