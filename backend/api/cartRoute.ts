@@ -111,8 +111,8 @@ router.post(
       // INSERT query
       const queryInsert = `
         INSERT INTO POS_CART
-        (quantity, price, user_id, date_created, product_id)
-        VALUES (@quantity, @price, @user_id, @date_created, @product_id)
+        (quantity, price, user_id, date_created, product_id, isCheckout)
+        VALUES (@quantity, @price, @user_id, @date_created, @product_id, @isCheckout)
       `;
 
       const request = new sql.Request();
@@ -121,6 +121,7 @@ router.post(
       request.input('user_id', sql.NVarChar, user_id);
       request.input('date_created', sql.Date, dateRegister);
       request.input('product_id', sql.NVarChar, product_id);
+      request.input('isCheckout', sql.VarChar, 'N');
 
       const resultInsert = await request.query(queryInsert);
 
@@ -182,6 +183,53 @@ router.put(
       }
     } catch (err) {
       console.error('Cart update failed:', err);
+      res.status(500).json({
+        status: 'error',
+        message: 'An error occurred during update',
+      });
+    }
+  },
+);
+
+router.delete(
+  '/delete',
+  authenticateToken,
+  async (req: AuthenticatedRequest, res: Response) => {
+    try {
+      await sql.connect(connectionConfig);
+
+      const { cart_id } = req.body;
+
+      const user_id = req.user?.userId;
+
+      if (!user_id) {
+        return res.status(401).json({ message: 'Unauthorized: Invalid user' });
+      }
+
+      // UPDATE query
+      const queryUpdate = `
+      DELETE POS_CART
+      WHERE cart_id = @cart_id
+    `;
+
+      const request = new sql.Request();
+      request.input('cart_id', sql.NVarChar, cart_id);
+
+      const resultUpdate = await request.query(queryUpdate);
+
+      if (resultUpdate.rowsAffected[0] > 0) {
+        res.status(200).json({
+          status: 'success',
+          message: 'Cart qty deleted successfully',
+        });
+      } else {
+        res.status(404).json({
+          status: 'error',
+          message: 'Cart deleted failed: Cart item not found',
+        });
+      }
+    } catch (err) {
+      console.error('Cart deleted failed:', err);
       res.status(500).json({
         status: 'error',
         message: 'An error occurred during update',

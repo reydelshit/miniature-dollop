@@ -8,7 +8,7 @@ import {
   DropdownMenuSeparator,
   DropdownMenuTrigger,
 } from '@/components/ui/dropdown-menu';
-import axios from 'axios';
+import axios, { AxiosError } from 'axios';
 import { ShoppingCart } from 'lucide-react';
 import Healthy from '@/assets/healthy.jpg';
 import {
@@ -35,12 +35,14 @@ type CartItem = {
   description: string;
   image: { type: string; data: number[] };
   StockCode: string;
+  isCheckout: string;
 };
 
 const HeaderAuth = () => {
   const [carts, setCarts] = useState<CartItem[]>([]);
   const [quantity, setQuantity] = useState(0);
   const [quantityIndex, setQuantityIndex] = useState(0);
+  const [selectedCarts, setSelectedCarts] = useState(new Set());
 
   const handleFetchCarts = async () => {
     try {
@@ -127,6 +129,66 @@ const HeaderAuth = () => {
     );
   };
 
+  const handleSelectCart = (cartId: number) => {
+    setSelectedCarts((prevSelected) => {
+      const newSelected = new Set(prevSelected);
+      if (newSelected.has(cartId)) {
+        newSelected.delete(cartId);
+      } else {
+        newSelected.add(cartId);
+      }
+
+      console.log('Selected carts:', newSelected);
+      return newSelected;
+    });
+  };
+
+  const handleDeleteCart = async (cartId: number) => {
+    try {
+      const response = await axios.delete(
+        `${import.meta.env.VITE_SERVER_LINK}/cart/delete`,
+        {
+          data: {
+            cart_id: cartId,
+          },
+          withCredentials: true,
+        },
+      );
+
+      console.log(response, 'resp');
+
+      if (response.data.status === 'success') {
+        toast({
+          title: 'Delete Cart',
+          description: 'The cart has been successfully deleted.',
+        });
+
+        handleFetchCarts();
+      }
+    } catch (error) {
+      console.error(error);
+
+      if (error instanceof AxiosError) {
+        console.error('Error during login:', error);
+
+        console.log(error.response?.status, 'status');
+        console.log(error.response?.statusText, 'statusText');
+
+        if (error.response?.status === 401) {
+          toast({
+            title: 'Unauthorized',
+            description: 'Invalid user',
+          });
+        } else {
+          toast({
+            title: 'Error',
+            description: 'An error occurred during registration',
+          });
+        }
+      }
+    }
+  };
+
   return (
     <div className="h-fit w-full border-b-[1px] shadow-sm">
       <div className="flex h-[6] items-center justify-between px-10 py-4">
@@ -154,82 +216,100 @@ const HeaderAuth = () => {
               {/* {error && <p>Error {error}</p>} */}
 
               <div className="mt-[2rem] flex flex-col gap-4">
-                {carts?.map((cart) => (
-                  <div key={cart.cart_id}>
-                    <div className="flex items-center gap-8">
-                      <div className="flex w-[150px] items-center gap-2">
-                        <Checkbox />
-                        {cart.image ? (
-                          <ImageComponent
-                            type="cart"
-                            buffer={cart.image}
-                            alt={cart.description}
+                {carts
+                  ?.filter((cart) => cart.isCheckout.includes('N'))
+                  .map((cart, index) => (
+                    <div key={index}>
+                      <div className="flex items-center gap-8">
+                        <div className="flex w-[150px] items-center gap-2">
+                          <Checkbox
+                            onClick={() => handleSelectCart(cart.cart_id)}
                           />
-                        ) : (
-                          <span>There is a problem with the image</span>
-                        )}
-                      </div>
-                      <div className="w-full">
-                        <div className="my-2 flex w-full justify-between">
-                          <div>
-                            <h1 className="font-bold">{cart.description}</h1>
-                            <p>Product Code: {cart.StockCode} </p>
-                          </div>
-
-                          <Button className="bg-red-500 text-white">
-                            Remove
-                          </Button>
+                          {cart.image ? (
+                            <ImageComponent
+                              type="cart"
+                              buffer={cart.image}
+                              alt={cart.description}
+                            />
+                          ) : (
+                            <span>There is a problem with the image</span>
+                          )}
                         </div>
+                        <div className="w-full">
+                          <div className="my-2 flex w-full justify-between">
+                            <div>
+                              <h1 className="font-bold">{cart.description}</h1>
+                              <p>Product Code: {cart.StockCode} </p>
+                            </div>
 
-                        <div className="flex justify-between">
-                          <div className="flex items-center gap-2">
                             <Button
-                              onClick={() =>
-                                handleQuantity(
-                                  cart.cart_id,
-                                  cart.quantity,
-                                  cart.cart_id,
-                                  'substract',
-                                )
-                              }
+                              onClick={() => handleDeleteCart(cart.cart_id)}
+                              className="bg-red-500 text-white"
                             >
-                              -
-                            </Button>
-                            <p>{cart.quantity} qty</p>
-                            <Button
-                              onClick={() =>
-                                handleQuantity(
-                                  cart.cart_id,
-                                  cart.quantity,
-                                  cart.cart_id,
-                                  'add',
-                                )
-                              }
-                            >
-                              +
+                              Remove
                             </Button>
                           </div>
 
-                          <h2 className="font-bold">
-                            ₱ {cart.price * cart.quantity}
-                          </h2>
+                          <div className="flex justify-between">
+                            <div className="flex items-center gap-2">
+                              <Button
+                                onClick={() =>
+                                  handleQuantity(
+                                    cart.cart_id,
+                                    cart.quantity,
+                                    cart.cart_id,
+                                    'substract',
+                                  )
+                                }
+                              >
+                                -
+                              </Button>
+                              <p>{cart.quantity} qty</p>
+                              <Button
+                                onClick={() =>
+                                  handleQuantity(
+                                    cart.cart_id,
+                                    cart.quantity,
+                                    cart.cart_id,
+                                    'add',
+                                  )
+                                }
+                              >
+                                +
+                              </Button>
+                            </div>
+
+                            <h2 className="font-bold">
+                              ₱ {cart.price * cart.quantity}
+                            </h2>
+                          </div>
                         </div>
                       </div>
                     </div>
-                  </div>
-                ))}
+                  ))}
               </div>
 
               <div className="absolute bottom-2 right-0 flex h-[4rem] w-full justify-end p-4">
-                <h1 className="text-2xl">
-                  Total Price: ₱{' '}
-                  <span className="font-bold">
-                    {carts.reduce(
-                      (acc, cart) => acc + cart.price * cart.quantity,
-                      0,
-                    )}
-                  </span>
-                </h1>
+                <div className="flex w-full items-center justify-between">
+                  <h1 className="text-2xl">
+                    Total Price: ₱{' '}
+                    <span className="font-bold">
+                      {selectedCarts.size > 0
+                        ? carts
+                            .filter((cart) => selectedCarts.has(cart.cart_id))
+                            .reduce(
+                              (acc, cart) => acc + cart.price * cart.quantity,
+                              0,
+                            )
+                        : carts.reduce(
+                            (acc, cart) => acc + cart.price * cart.quantity,
+                            0,
+                          )}
+                    </span>
+                  </h1>
+
+                  {selectedCarts.size > 0 && <Button>Checkout</Button>}
+                </div>
               </div>
             </SheetContent>
           </Sheet>

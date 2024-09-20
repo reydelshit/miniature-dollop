@@ -94,8 +94,8 @@ router.post('/post', upload.none(), loginRoute_1.authenticateToken, (req, res) =
         // INSERT query
         const queryInsert = `
         INSERT INTO POS_CART
-        (quantity, price, user_id, date_created, product_id)
-        VALUES (@quantity, @price, @user_id, @date_created, @product_id)
+        (quantity, price, user_id, date_created, product_id, isCheckout)
+        VALUES (@quantity, @price, @user_id, @date_created, @product_id, @isCheckout)
       `;
         const request = new msnodesqlv8_1.default.Request();
         request.input('quantity', msnodesqlv8_1.default.Int, quantity);
@@ -103,6 +103,7 @@ router.post('/post', upload.none(), loginRoute_1.authenticateToken, (req, res) =
         request.input('user_id', msnodesqlv8_1.default.NVarChar, user_id);
         request.input('date_created', msnodesqlv8_1.default.Date, dateRegister);
         request.input('product_id', msnodesqlv8_1.default.NVarChar, product_id);
+        request.input('isCheckout', msnodesqlv8_1.default.VarChar, 'N');
         const resultInsert = yield request.query(queryInsert);
         console.log('Inserting to cart:', resultInsert);
         // Send the response
@@ -153,6 +154,44 @@ router.put('/update', loginRoute_1.authenticateToken, (req, res) => __awaiter(vo
     }
     catch (err) {
         console.error('Cart update failed:', err);
+        res.status(500).json({
+            status: 'error',
+            message: 'An error occurred during update',
+        });
+    }
+}));
+router.delete('/delete', loginRoute_1.authenticateToken, (req, res) => __awaiter(void 0, void 0, void 0, function* () {
+    var _a;
+    try {
+        yield msnodesqlv8_1.default.connect(connectionConfig_1.connectionConfig);
+        const { cart_id } = req.body;
+        const user_id = (_a = req.user) === null || _a === void 0 ? void 0 : _a.userId;
+        if (!user_id) {
+            return res.status(401).json({ message: 'Unauthorized: Invalid user' });
+        }
+        // UPDATE query
+        const queryUpdate = `
+      DELETE POS_CART
+      WHERE cart_id = @cart_id
+    `;
+        const request = new msnodesqlv8_1.default.Request();
+        request.input('cart_id', msnodesqlv8_1.default.NVarChar, cart_id);
+        const resultUpdate = yield request.query(queryUpdate);
+        if (resultUpdate.rowsAffected[0] > 0) {
+            res.status(200).json({
+                status: 'success',
+                message: 'Cart qty deleted successfully',
+            });
+        }
+        else {
+            res.status(404).json({
+                status: 'error',
+                message: 'Cart deleted failed: Cart item not found',
+            });
+        }
+    }
+    catch (err) {
+        console.error('Cart deleted failed:', err);
         res.status(500).json({
             status: 'error',
             message: 'An error occurred during update',
